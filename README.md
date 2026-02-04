@@ -1,14 +1,47 @@
-# PAX DEI Map - KARMA Gilde
+# PAX DEI MAP - KARMA Gilde
 
-Eine interaktive Map-Webanwendung für PAX Die mit Marker-System, Gilden-Verwaltung und vollständigem Admin Control Panel.
+Eine hochmoderne interaktive Map-Webanwendung für PAX Die mit professionellem Tile-System, Marker-Verwaltung, Gilden-System und vollständigem Admin Control Panel.
+
+## 📦 Download & Installation
+
+### Option 1: Download Release (Empfohlen)
+Lade die neueste Version direkt herunter:
+**[Download Latest Release](https://github.com/StateDev08/Karma-Map/releases)** 📥
+
+### Option 2: Git Clone
+```bash
+git clone https://github.com/StateDev08/Karma-Map.git
+cd Karma-Map
+```
+
+### Option 3: GitHub
+Besuche das Repository: **[StateDev08/Karma-Map](https://github.com/StateDev08/Karma-Map)**
+
+---
+
+## ⭐ Highlights
+
+🚀 **Google Maps-ähnliche Performance**
+- Pixelfreies Zoomen mit Tile-System
+- 11 Zoom-Stufen (Level 0-10) mit dynamischer Auflösung
+- Smooth Animationen und Inertia-Panning
+- WebP-Unterstützung für optimale Performance
+
+🗺️ **Professionelle Karten-Technologie**
+- Leaflet.js mit angepasstem Koordinatensystem
+- Automatische Tile-Generierung (512x512px Kacheln)
+- Retina-Display-Unterstützung
+- Unbegrenztes Herauszoomen
 
 ## Features
 
-✅ **Interaktive Karte**
-- Custom Map-Bild Upload
-- Marker mit verschiedenen Typen
-- Filterung nach Marker-Typen und Gilden
-- Zoom und Navigation
+✅ **Interaktive High-Performance Karte**
+- Custom Map-Bild Upload mit automatischer Tile-Konvertierung
+- Pixelfreies Zoomen bis zu 15x (virtuelle Vergrößerung)
+- Marker mit verschiedenen Typen und Font Awesome Icons
+- Echtzeit-Filterung nach Marker-Typen und Gilden
+- Smooth Zoom und Navigation wie bei Google Maps
+- Doppelklick zum Zoom-In, Mausrad-Zoom, Touch-Unterstützung
 
 ✅ **Gilden-System**
 - Verwaltung mehrerer Gilden
@@ -22,13 +55,22 @@ Eine interaktive Map-Webanwendung für PAX Die mit Marker-System, Gilden-Verwalt
 - Beschreibungen und Bilder
 - Zuordnung zu Gilden
 
+✅ **Advanced Tile-System**
+- Automatische Tile-Generierung aus hochauflösenden Bildern
+- 11 Zoom-Stufen für maximale Detailgenauigkeit
+- WebP + PNG Fallback für optimale Kompatibilität
+- Bicubic-Interpolation für beste Bildqualität
+- Antialiasing für glatte Kanten
+- Intelligentes Caching und Progressive Loading
+
 ✅ **Admin Control Panel**
 - Vollständige CRUD-Operationen
 - Logo-Verwaltung (Text oder Bild)
 - Farbschema-Anpassung
-- Map-Upload
+- Map-Upload mit One-Click Tile-Generierung
 - Marker-Typen konfigurieren
-- Nur für Admins zugänglich
+- Erweiterte Zoom-Einstellungen (-10 bis +15)
+- Nur für Admins zugänglich mit CSRF-Schutz
 
 ✅ **Discord-Style Design**
 - Schwarz/Rot Farbschema
@@ -39,9 +81,12 @@ Eine interaktive Map-Webanwendung für PAX Die mit Marker-System, Gilden-Verwalt
 ## Installation
 
 ### Voraussetzungen
-- PHP 7.4 oder höher
+- PHP 7.4 oder höher (PHP 8.x empfohlen)
 - MySQL/MariaDB 5.7 oder höher
-- Webserver (Apache/Nginx) oder XAMPP/WAMP für lokale Entwicklung
+- Webserver (Apache/Nginx) oder XAMPP/WAMP/Laragon für lokale Entwicklung
+- **GD Library** (für Tile-Generierung - meist standardmäßig aktiviert)
+- **PHP Extensions:** PDO, GD, JSON, mbstring
+- Mindestens 256 MB PHP Memory (empfohlen: 512 MB für große Karten)
 
 ### Setup-Schritte
 
@@ -112,23 +157,29 @@ Eine interaktive Map-Webanwendung für PAX Die mit Marker-System, Gilden-Verwalt
 **Marker-Typen**
 - Neue Marker-Typen erstellen
 - Icons (Font Awesome) zuweisen
-- Farben und Sortierung
-
-**Map hochladen**
-- Hintergrundbild für die Karte
+- Farben und Sortierung hochladen
+- Automatische Tile-Generierung mit einem Klick
+- Unterstützt JPG, PNG, GIF, WebP
 - Max. 10 MB (anpassbar in config.php)
+- Empfohlene Auflösung: 3000x3000px oder höher für beste Qualität
+- Zeigt Tile-Status und Metadaten an
+- Option zum Deaktivieren des Tile-Systems (Fallback auf Standard-Bild)
 
 **Einstellungen**
 - Logo-Verwaltung (Text oder Bild)
 - Farbschema (Rot/Schwarz)
-- Map-Zoom-Einstellungen
-
-## Struktur
-
-```
-pax-die-map/
-├── admin/                  # Admin Panel
-│   ├── pages/              # Admin-Seiten
+- Erweiterte Map-Zoom-Einstellungen:
+  - Minimaler Zoom: -10 bis +10 (negative Werte = weiter herauszoomen)
+  - Maximaler Zoom: 1 bis 15
+  - Standard-Zoom beim Lad
+- Logo-Verwaltung (Text oder Bild)
+- Farbschema (Rot/Schwarz)
+- Ma│   ├── dashboard.php
+│   │   ├── markers.php
+│   │   ├── guilds.php
+│   │   ├── marker-types.php
+│   │   ├── map-upload.php  # Tile-System Management
+│   │   └── settings.php
 │   ├── index.php           # Admin Dashboard
 │   ├── login.php           # Login
 │   └── logout.php          # Logout
@@ -136,8 +187,35 @@ pax-die-map/
 │   └── markers.php         # Marker API
 ├── assets/
 │   ├── css/                # Stylesheets
+│   │   ├── style.css       # Frontend CSS
+│   │   └── admin.css       # Admin CSS
 │   └── js/                 # JavaScript
+│       ├── map.js          # Leaflet Integration + Tile-System
+│       └── admin.js        # Admin Funktionen
 ├── database/
+│   └── schema.sql          # Datenbank-Schema
+├── includes/
+│   ├── config.php          # Konfiguration
+│   ├── db.php              # Datenbank-Klasse
+│   ├── auth.php            # Authentifizierung
+│   ├── functions.php       # Helper-Funktionen
+│   └── tile-generator. (PHP 8.x empfohlen)
+- **Datenbank:** MySQL/MariaDB mit PDO
+- **Frontend:** HTML5, CSS3, JavaScript (ES6+)
+- **Map-Library:** Leaflet.js 1.9.4 mit CRS.Simple für benutzerdefinierte Koordinaten
+- **Tile-System:** Custom PHP Tile-Generator mit GD Library
+- **Bild-Verarbeitung:** 
+  - GD Library mit bicubic Interpolation
+  - WebP-Unterstützung für optimale Kompression
+  - PNG-Fallback für Kompatibilität
+- **Icons:** Font Awesome 6.5.1
+- **Performance:**
+  - Lazy Loading für Tiles
+  - Progressive Image Loading
+  - Browser-Caching mit .htaccess
+  - CORS-Headers für Cross-Origin
+- **Architektur:** MVC-ähnlich, PDO für sichere Datenbankabfragen
+│   │   └── .htaccess       # Caching & CORS
 │   └── schema.sql          # Datenbank-Schema
 ├── includes/
 │   ├── config.php          # Konfiguration
@@ -161,6 +239,79 @@ pax-die-map/
 - **Icons:** Font Awesome 6.5.1
 - **Architektur:** MVC-ähnlich, PDO für Datenbank
 
+
+### Tile-System Konfiguration
+- **Tile-Größe:** 512x512px (Standard, optimiert für Performance)
+- **Zoom-Stufen:** 0-10 (11 Stufen, konfigurierbar in `tile-generator.php`)
+- **Bildformat:** WebP (primär) + PNG (Fallback)
+- **Qualität:** PNG Kompression Level 6, WebP 90%
+- **Performance:** 
+  - Bei 3000x3000px Bild: ~200-300 Tiles
+  - Generierungszeit: 30-60 Sekunden (abhängig von Bildgröße)
+  - Speicherplatz: 2-5 MB (mit WebP)
+
+### Tile-System neu generieren
+## Performance-Tipps
+
+🚀 **Für große Karten (>5000x5000px):**
+- Erhöhe PHP Memory Limit in `php.ini`: `memory_limit = 512M`
+- Erhöhe max execution time: `max_execution_time = 300`
+- Nutze WebP für 30-50% kleinere Dateien
+- Cache-Header in `.htaccess` sind bereits optimiert
+
+🎯 **Für beste Qualität:**
+- Verwende hochauflösende PNG-Bilder als Quelle
+- Aktiviere immer die automatische Tile-Generierung
+- Mindestens 3000x3000px für große Maps
+- Test verschiedene Zoom-Stufen nach der Generierung
+
+## Bekannte Features
+
+✨ **Tile-System Features:**
+- Automatische Erkennung ob Tiles verfügbar sind
+- Intelligenter Fallback auf Standard-Bild wenn Tiles fehlen
+- Smooth Zoom-Animationen wie Google Maps
+- Inertia-Panning (Schwungkraft beim Verschieben)
+- Doppelklick zentriert und zoomt
+- Retina-Display-Unterstützung
+- Cross-Browser-kompatibel (Chrome, Firefox, Safari, Edge)
+
+## Changelog
+
+### Version 2.0.0 (04.02.2026)
+- ✨ **NEU:** Google Maps-ähnliches Tile-System
+- ✨ Pixelfreies Zoomen bis Level 15
+- ✨ WebP-Unterstützung für optimale Performance
+- ✨ Automatische Tile-Generierung im Admin-Panel
+- ✨ 11 Zoom-Stufen mit bicubic Interpolation
+- ✨ Smooth Animationen und Inertia-Panning
+- ✨ Erweiterte Zoom-Einstellungen (-10 bis +15)
+- 🔧 Verbesserte Bildqualität mit Antialiasing
+- 🔧 Optimierte Performance mit Tile-Caching
+- 🔧 Bessere Browser-Kompatibilität
+
+### Version 1.0.0 (01.02.2026)
+- 🎉 Initiale Veröffentlichung
+- Interaktive Karte mit Leaflet.js
+- Marker-System mit Typen und Gilden
+- Admin Control Panel
+- Discord-Style Design
+
+---
+
+**Erstellt am:** 01.02.2026  
+**Letzte Aktualisierung:** 04.02.2026  
+**Version:** 2.0.0  
+**Für:** KARMA Gilde - PAX Die  
+**Technologie:** PHP, MySQL, Leaflet.js, Tile-System
+```
+
+### Optimale Map-Einstellungen
+- **Bildauflösung:** 3000x3000px oder höher
+- **Format:** PNG (beste Qualität) oder JPG (kleinere Dateigröße)
+- **Minimaler Zoom:** -10 (ermöglicht weites Herauszoomen)
+- **Maximaler Zoom:** 10-15 (15 für virtuelle Über-Vergrößerung)
+- **Standard-Zoom:** 2-3 (optimale Übersicht beim Laden)
 ## Sicherheit
 
 ⚠️ **Wichtige Sicherheitshinweise:**
@@ -191,15 +342,32 @@ pax-die-map/
 
 Dieses Projekt wurde für die PAX Die Gilde KARMA erstellt.
 
-## Support
+## Support & Community
 
+### GitHub
+- **Repository:** [StateDev08/Karma-Map](https://github.com/StateDev08/Karma-Map)
+- **Issues:** [Bug Reports & Feature Requests](https://github.com/StateDev08/Karma-Map/issues)
+- **Releases:** [Download neueste Version](https://github.com/StateDev08/Karma-Map/releases)
+
+### Hilfe & Troubleshooting
 Bei Fragen oder Problemen:
 1. Prüfe die Datenbank-Verbindung in `config.php`
 2. Prüfe Schreibrechte für `uploads/` Ordner
 3. Prüfe PHP-Fehlerlog
+4. Erstelle ein [GitHub Issue](https://github.com/StateDev08/Karma-Map/issues) bei Bugs
+
+### Beitragen
+Contributions sind willkommen! 
+1. Fork das Repository
+2. Erstelle einen Feature-Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit deine Änderungen (`git commit -m 'Add some AmazingFeature'`)
+4. Push zum Branch (`git push origin feature/AmazingFeature`)
+5. Öffne einen Pull Request
 
 ---
 
-**Erstellt am:** 01.02.2026
-**Version:** 1.0.0
-**Für:** KARMA Gilde - PAX Die
+**Erstellt am:** 01.02.2026  
+**Letzte Aktualisierung:** 04.02.2026  
+**Version:** 2.0.0  
+**Für:** KARMA Gilde - PAX Die  
+**Repository:** [github.com/StateDev08/Karma-Map](https://github.com/StateDev08/Karma-Map)
