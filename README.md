@@ -1,4 +1,4 @@
-# PAX Die Map - KARMA Gilde
+# PAX DEI Map - KARMA Gilde
 
 Eine interaktive Map-Webanwendung für PAX Die mit Marker-System, Gilden-Verwaltung und vollständigem Admin Control Panel.
 
