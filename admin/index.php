@@ -45,6 +45,11 @@
                 <a href="?page=map-upload" class="nav-item <?php echo $currentPage === 'map-upload' ? 'active' : ''; ?>">
                     <i class="fas fa-image"></i> Map hochladen
                 </a>
+                <?php if (Auth::hasPermission('users.view')): ?>
+                <a href="?page=users" class="nav-item <?php echo $currentPage === 'users' ? 'active' : ''; ?>">
+                    <i class="fas fa-users"></i> Benutzerverwaltung
+                </a>
+                <?php endif; ?>
                 <a href="?page=settings" class="nav-item <?php echo $currentPage === 'settings' ? 'active' : ''; ?>">
                     <i class="fas fa-cog"></i> Einstellungen
                 </a>

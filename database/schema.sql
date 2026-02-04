@@ -10,10 +10,36 @@ CREATE TABLE IF NOT EXISTS users (
     username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     email VARCHAR(100),
+    full_name VARCHAR(100),
+    role ENUM('super_admin', 'admin', 'moderator', 'editor') DEFAULT 'editor',
+    is_active TINYINT(1) DEFAULT 1,
     is_admin TINYINT(1) DEFAULT 1,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     last_login TIMESTAMP NULL,
-    INDEX idx_username (username)
+    created_by INT NULL,
+    INDEX idx_username (username),
+    INDEX idx_role (role),
+    INDEX idx_active (is_active),
+    FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Berechtigungen-Tabelle
+CREATE TABLE IF NOT EXISTS permissions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL UNIQUE,
+    description TEXT,
+    category VARCHAR(50),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Rollen-Berechtigungen Zuordnung
+CREATE TABLE IF NOT EXISTS role_permissions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    role ENUM('super_admin', 'admin', 'moderator', 'editor') NOT NULL,
+    permission_name VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_role_permission (role, permission_name),
+    FOREIGN KEY (permission_name) REFERENCES permissions(name) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Gilden-Tabelle
@@ -107,10 +133,89 @@ INSERT INTO settings (setting_key, setting_value, description) VALUES
 ('map_max_zoom', '5', 'Maximaler Zoom'),
 ('map_min_zoom', '1', 'Minimaler Zoom');
 
--- Standard-Admin-User (Passwort: admin123 - BITTE ÄNDERN!)
--- Passwort-Hash für 'admin123'
-INSERT INTO users (username, password, email, is_admin) VALUES
-('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin@karma.pax', 1);
+-- Standard-Berechtigungen
+INSERT INTO permissions (name, description, category) VALUES
+-- User Management
+('users.view', 'Benutzer anzeigen', 'users'),
+('users.create', 'Benutzer erstellen', 'users'),
+('users.edit', 'Benutzer bearbeiten', 'users'),
+('users.delete', 'Benutzer löschen', 'users'),
+('users.manage_roles', 'Rollen verwalten', 'users'),
+
+-- Marker Management
+('markers.view', 'Marker anzeigen', 'markers'),
+('markers.create', 'Marker erstellen', 'markers'),
+('markers.edit', 'Marker bearbeiten', 'markers'),
+('markers.delete', 'Marker löschen', 'markers'),
+
+-- Guild Management
+('guilds.view', 'Gilden anzeigen', 'guilds'),
+('guilds.create', 'Gilden erstellen', 'guilds'),
+('guilds.edit', 'Gilden bearbeiten', 'guilds'),
+('guilds.delete', 'Gilden löschen', 'guilds'),
+
+-- Marker Types
+('marker_types.view', 'Marker-Typen anzeigen', 'marker_types'),
+('marker_types.create', 'Marker-Typen erstellen', 'marker_types'),
+('marker_types.edit', 'Marker-Typen bearbeiten', 'marker_types'),
+('marker_types.delete', 'Marker-Typen löschen', 'marker_types'),
+
+-- Map Management
+('map.upload', 'Map hochladen', 'map'),
+('map.generate_tiles', 'Tiles generieren', 'map'),
+
+-- Settings
+('settings.view', 'Einstellungen anzeigen', 'settings'),
+('settings.edit', 'Einstellungen bearbeiten', 'settings');
+
+-- Berechtigungen für Super Admin (hat alle Rechte)
+INSERT INTO role_permissions (role, permission_name) 
+SELECT 'super_admin', name FROM permissions;
+
+-- Berechtigungen für Admin (fast alle Rechte außer User-Rollen-Verwaltung)
+INSERT INTO role_permissions (role, permission_name) VALUES
+('admin', 'users.view'),
+('admin', 'users.create'),
+('admin', 'users.edit'),
+('admin', 'markers.view'),
+('admin', 'markers.create'),
+('admin', 'markers.edit'),
+('admin', 'markers.delete'),
+('admin', 'guilds.view'),
+('admin', 'guilds.create'),
+('admin', 'guilds.edit'),
+('admin', 'guilds.delete'),
+('admin', 'marker_types.view'),
+('admin', 'marker_types.create'),
+('admin', 'marker_types.edit'),
+('admin', 'marker_types.delete'),
+('admin', 'map.upload'),
+('admin', 'map.generate_tiles'),
+('admin', 'settings.view'),
+('admin', 'settings.edit');
+
+-- Berechtigungen für Moderator (Marker und Gilden verwalten)
+INSERT INTO role_permissions (role, permission_name) VALUES
+('moderator', 'users.view'),
+('moderator', 'markers.view'),
+('moderator', 'markers.create'),
+('moderator', 'markers.edit'),
+('moderator', 'markers.delete'),
+('moderator', 'guilds.view'),
+('moderator', 'guilds.create'),
+('moderator', 'guilds.edit'),
+('moderator', 'marker_types.view'),
+('moderator', 'map.upload'),
+('moderator', 'settings.view');
+
+-- Berechtigungen für Editor (nur Marker bearbeiten)
+INSERT INTO role_permissions (role, permission_name) VALUES
+('editor', 'markers.view'),
+('editor', 'markers.create'),
+('editor', 'markers.edit'),
+('editor', 'guilds.view'),
+('editor', 'marker_types.view'),
+('editor', 'settings.view');
 
 -- Standard-Marker-Typen
 INSERT INTO marker_types (name, icon, color, description, sort_order) VALUES
