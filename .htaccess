@@ -1,0 +1,19 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Zugriff auf includes/ blockieren
+    RewriteRule ^includes/ - [F,L]
+    
+    # Zugriff auf database/ blockieren
+    RewriteRule ^database/ - [F,L]
+</IfModule>
+
+# Verzeichnis-Listing deaktivieren
+Options -Indexes
+
+# PHP Einstellungen
+<IfModule mod_php7.c>
+    php_flag display_errors Off
+    php_value upload_max_filesize 10M
+    php_value post_max_size 10M
+</IfModule>

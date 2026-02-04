@@ -1,0 +1,25 @@
+# Ignore uploads
+/uploads/*
+!/uploads/.gitkeep
+
+# Ignore config (für Sicherheit)
+# includes/config.php
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# Logs
+*.log
+error_log
+
+# Temp
+*.tmp
+*.bak
+*.swp
+*~
