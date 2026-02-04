@@ -1,3 +1,18 @@
+<?php
+// Fehleranzeige für Debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Includes laden
+require_once __DIR__ . '/includes/config.php';
+require_once __DIR__ . '/includes/db.php';
+require_once __DIR__ . '/includes/auth.php';
+require_once __DIR__ . '/includes/functions.php';
+
+$guilds = getActiveGuilds();
+$markerTypes = getMarkerTypes();
+$isAdmin = Auth::check();
+?>
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -15,21 +30,6 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <?php
-    // Dynamischer Pfad zu includes
-    $includesPath = file_exists(__DIR__ . '/../includes/config.php') 
-        ? __DIR__ . '/../includes/' 
-        : __DIR__ . '/../../includes/';
-    
-    require_once $includesPath . 'config.php';
-    require_once $includesPath . 'db.php';
-    require_once $includesPath . 'auth.php';
-    require_once $includesPath . 'functions.php';
-    
-    $guilds = getActiveGuilds();
-    $markerTypes = getMarkerTypes();
-    $isAdmin = Auth::check();
-    ?>
     
     <!-- Sidebar -->
     <div class="sidebar">
@@ -125,6 +125,16 @@
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
+    <!-- Leaflet Plugins -->
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css" />
+    <script src="https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-minimap/3.6.1/Control.MiniMap.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-minimap/3.6.1/Control.MiniMap.min.js"></script>
+    
+    <!-- html2canvas für Screenshots (optional) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
     <!-- Custom JS -->
     <script>
         // Map-Daten an JavaScript übergeben
@@ -133,6 +143,23 @@
             defaultZoom: <?php echo json_encode((int)getSetting('map_default_zoom', 2)); ?>,
             maxZoom: <?php echo json_encode((int)getSetting('map_max_zoom', 5)); ?>,
             minZoom: <?php echo json_encode((int)getSetting('map_min_zoom', -10)); ?>,
+            defaultPositionX: <?php echo json_encode((float)getSetting('map_default_position_x', 0)); ?>,
+            defaultPositionY: <?php echo json_encode((float)getSetting('map_default_position_y', 0)); ?>,
+            showCoordinates: <?php echo json_encode(getSetting('map_show_coordinates', '1') === '1'); ?>,
+            showMinimap: <?php echo json_encode(getSetting('map_show_minimap', '1') === '1'); ?>,
+            enableMeasure: <?php echo json_encode(getSetting('map_enable_measure', '1') === '1'); ?>,
+            enableDrawing: <?php echo json_encode(getSetting('map_enable_drawing', '1') === '1'); ?>,
+            enableFullscreen: <?php echo json_encode(getSetting('map_enable_fullscreen', '1') === '1'); ?>,
+            enableSearch: <?php echo json_encode(getSetting('map_enable_search', '1') === '1'); ?>,
+            gridEnabled: <?php echo json_encode(getSetting('map_grid_enabled', '0') === '1'); ?>,
+            gridSize: <?php echo json_encode((int)getSetting('map_grid_size', 100)); ?>,
+            mouseCoordinates: <?php echo json_encode(getSetting('map_mouse_coordinates', '1') === '1'); ?>,
+            scaleControl: <?php echo json_encode(getSetting('map_scale_control', '1') === '1'); ?>,
+            zoomAnimation: <?php echo json_encode(getSetting('map_zoom_animation', '1') === '1'); ?>,
+            doubleClickZoom: <?php echo json_encode(getSetting('map_double_click_zoom', '1') === '1'); ?>,
+            scrollWheelZoom: <?php echo json_encode(getSetting('map_scroll_wheel_zoom', '1') === '1'); ?>,
+            markerClustering: <?php echo json_encode(getSetting('map_marker_clustering', '0') === '1'); ?>,
+            autoPan: <?php echo json_encode(getSetting('map_auto_pan', '1') === '1'); ?>,
             isAdmin: <?php echo json_encode($isAdmin); ?>,
             useTiles: <?php 
                 $useTiles = getSetting('use_tiles', '0') === '1';
@@ -149,5 +176,6 @@
         };
     </script>
     <script src="assets/js/map.js"></script>
+    <script src="assets/js/map-extended.js"></script>
 </body>
 </html>

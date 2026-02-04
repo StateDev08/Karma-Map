@@ -131,7 +131,24 @@ INSERT INTO settings (setting_key, setting_value, description) VALUES
 ('map_image', '', 'Pfad zum Map-Hintergrundbild'),
 ('map_default_zoom', '2', 'Standard-Zoom-Level'),
 ('map_max_zoom', '5', 'Maximaler Zoom'),
-('map_min_zoom', '1', 'Minimaler Zoom');
+('map_min_zoom', '1', 'Minimaler Zoom'),
+('map_show_coordinates', '1', 'Koordinaten-Anzeige aktiviert'),
+('map_show_minimap', '1', 'Mini-Map aktiviert'),
+('map_enable_measure', '1', 'Messwerkzeug aktiviert'),
+('map_enable_drawing', '1', 'Zeichenwerkzeuge aktiviert'),
+('map_enable_fullscreen', '1', 'Vollbild-Modus aktiviert'),
+('map_enable_search', '1', 'Koordinaten-Suche aktiviert'),
+('map_default_position_x', '0', 'Standard-Position X'),
+('map_default_position_y', '0', 'Standard-Position Y'),
+('map_grid_enabled', '0', 'Raster-Overlay aktiviert'),
+('map_grid_size', '100', 'Raster-Größe in Pixeln'),
+('map_mouse_coordinates', '1', 'Maus-Koordinaten live anzeigen'),
+('map_scale_control', '1', 'Maßstabsleiste anzeigen'),
+('map_zoom_animation', '1', 'Zoom-Animation aktiviert'),
+('map_double_click_zoom', '1', 'Doppelklick-Zoom aktiviert'),
+('map_scroll_wheel_zoom', '1', 'Mausrad-Zoom aktiviert'),
+('map_marker_clustering', '0', 'Marker-Clustering aktiviert'),
+('map_auto_pan', '1', 'Auto-Pan bei Marker-Klick');
 
 -- Standard-Berechtigungen
 INSERT INTO permissions (name, description, category) VALUES

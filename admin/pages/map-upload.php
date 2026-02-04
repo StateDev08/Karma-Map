@@ -32,7 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             } elseif ($_POST['action'] === 'generate_tiles') {
                 // Tiles aus bestehendem Bild generieren
                 if ($currentMapImage) {
-                    $imagePath = str_replace(getBaseUrl() . '/', '', $currentMapImage);
+                    // Konvertiere URL zu absolutem Pfad
+                    $imagePath = BASE_PATH . str_replace(UPLOAD_URL, '/uploads', $currentMapImage);
                     $tileResult = $tileGenerator->generateTiles($imagePath);
                     if ($tileResult['success']) {
                         setSetting('use_tiles', '1');
@@ -92,20 +93,114 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         <?php if ($tileMetadata): ?>
         <div class="tile-status">
             <h3><i class="fas fa-check-circle"></i> Tile-System ist aktiviert</h3>
-            <div class="tile-info">
-                <p><strong>Auflösung:</strong> <?php echo $tileMetadata['sourceWidth']; ?> x <?php echo $tileMetadata['sourceHeight']; ?> px</p>
-                <p><strong>Tile-Größe:</strong> <?php echo $tileMetadata['tileSize']; ?> x <?php echo $tileMetadata['tileSize']; ?> px</p>
-                <p><strong>Zoom-Stufen:</strong> <?php echo $tileMetadata['minZoom']; ?> bis <?php echo $tileMetadata['maxZoom']; ?></p>
-                <p><strong>Anzahl Tiles:</strong> <?php echo $tileMetadata['tilesGenerated']; ?></p>
+            <div class="tile-info-grid">
+                <div class="tile-info-item">
+                    <i class="fas fa-image"></i>
+                    <div>
+                        <strong>Quell-Auflösung</strong>
+                        <p><?php echo $tileMetadata['sourceWidth']; ?> x <?php echo $tileMetadata['sourceHeight']; ?> px</p>
+                    </div>
+                </div>
+                <div class="tile-info-item">
+                    <i class="fas fa-th"></i>
+                    <div>
+                        <strong>Tile-Größe</strong>
+                        <p><?php echo $tileMetadata['tileSize']; ?> x <?php echo $tileMetadata['tileSize']; ?> px</p>
+                    </div>
+                </div>
+                <div class="tile-info-item">
+                    <i class="fas fa-search-plus"></i>
+                    <div>
+                        <strong>Zoom-Stufen</strong>
+                        <p><?php echo $tileMetadata['minZoom']; ?> bis <?php echo $tileMetadata['maxZoom']; ?> (<?php echo ($tileMetadata['maxZoom'] - $tileMetadata['minZoom'] + 1); ?> Stufen)</p>
+                    </div>
+                </div>
+                <div class="tile-info-item">
+                    <i class="fas fa-layer-group"></i>
+                    <div>
+                        <strong>Generierte Tiles</strong>
+                        <p><?php echo number_format($tileMetadata['tilesGenerated']); ?> Kacheln</p>
+                    </div>
+                </div>
+                <?php if (isset($tileMetadata['estimatedSize'])): ?>
+                <div class="tile-info-item">
+                    <i class="fas fa-hdd"></i>
+                    <div>
+                        <strong>Gesamt-Größe</strong>
+                        <p><?php echo $tileMetadata['estimatedSize']; ?></p>
+                    </div>
+                </div>
+                <?php endif; ?>
+                <?php if (isset($tileMetadata['executionTime'])): ?>
+                <div class="tile-info-item">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <strong>Generierungs-Zeit</strong>
+                        <p><?php echo $tileMetadata['executionTime']; ?> Sekunden</p>
+                    </div>
+                </div>
+                <?php endif; ?>
+                <?php if (isset($tileMetadata['formats'])): ?>
+                <div class="tile-info-item">
+                    <i class="fas fa-file-image"></i>
+                    <div>
+                        <strong>Formate</strong>
+                        <p><?php echo strtoupper(implode(', ', $tileMetadata['formats'])); ?></p>
+                    </div>
+                </div>
+                <?php endif; ?>
+                <?php if (isset($tileMetadata['quality'])): ?>
+                <div class="tile-info-item">
+                    <i class="fas fa-star"></i>
+                    <div>
+                        <strong>Qualität</strong>
+                        <p>
+                            <?php if (isset($tileMetadata['quality']['webp'])): ?>
+                                WebP: <?php echo $tileMetadata['quality']['webp']; ?>%<br>
+                            <?php endif; ?>
+                            <?php if (isset($tileMetadata['quality']['jpeg'])): ?>
+                                JPEG: <?php echo $tileMetadata['quality']['jpeg']; ?>%<br>
+                            <?php endif; ?>
+                            PNG: Level <?php echo $tileMetadata['quality']['png'] ?? 6; ?>
+                        </p>
+                    </div>
+                </div>
+                <?php endif; ?>
+                <div class="tile-info-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <div>
+                        <strong>Generiert am</strong>
+                        <p><?php echo date('d.m.Y H:i:s', strtotime($tileMetadata['generatedAt'])); ?></p>
+                    </div>
+                </div>
+                <?php if (isset($tileMetadata['version'])): ?>
+                <div class="tile-info-item">
+                    <i class="fas fa-code-branch"></i>
+                    <div>
+                        <strong>System-Version</strong>
+                        <p>v<?php echo $tileMetadata['version']; ?></p>
+                    </div>
+                </div>
+                <?php endif; ?>
             </div>
             
-            <form method="POST" style="display: inline;">
-                <input type="hidden" name="csrf_token" value="<?php echo Auth::generateCsrfToken(); ?>">
-                <input type="hidden" name="action" value="disable_tiles">
-                <button type="submit" class="btn btn-warning">
-                    <i class="fas fa-times"></i> Tile-System deaktivieren (Standard-Bild verwenden)
-                </button>
-            </form>
+            <div class="tile-actions">
+                <form method="POST" style="display: inline;">
+                    <input type="hidden" name="csrf_token" value="<?php echo Auth::generateCsrfToken(); ?>">
+                    <input type="hidden" name="action" value="generate_tiles">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-sync-alt"></i> Tiles neu generieren
+                    </button>
+                </form>
+                
+                <form method="POST" style="display: inline;">
+                    <input type="hidden" name="csrf_token" value="<?php echo Auth::generateCsrfToken(); ?>">
+                    <input type="hidden" name="action" value="disable_tiles">
+                    <button type="submit" class="btn btn-warning">
+                        <i class="fas fa-times"></i> Tile-System deaktivieren
+                    </button>
+                </form>
+            </div>
         </div>
         <?php else: ?>
         <div class="tile-generate">

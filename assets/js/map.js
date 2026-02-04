@@ -280,19 +280,19 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
-// Tile Layer laden (wie Google Maps)
+// Tile Layer laden (wie Google Maps) - Enhanced Version 2.2
 function loadTileLayer(metadata) {
     const tileSize = metadata.tileSize || 512;
     const maxNativeZoom = metadata.maxZoom || 10;
     const minZoom = metadata.minZoom || 0;
     const width = metadata.sourceWidth;
     const height = metadata.sourceHeight;
+    const formats = metadata.formats || ['png'];
     
     // Berechne korrekte Bounds für Leaflet CRS.Simple
-    // Bei CRS.Simple: [y, x] statt [x, y]
     const bounds = [[0, 0], [height, width]];
     
-    // Berechne optimalen Zoom basierend auf Bildgröße
+    // Berechne optimalen Zoom
     const mapElement = document.getElementById('map');
     const mapWidth = mapElement.clientWidth;
     const mapHeight = mapElement.clientHeight;
@@ -301,8 +301,21 @@ function loadTileLayer(metadata) {
         Math.log2(mapHeight / height)
     );
     
-    // Erstelle TileLayer mit optimierten Einstellungen
-    const tileLayer = L.tileLayer('uploads/tiles/{z}/{x}/{y}.png', {
+    // Intelligente Format-Auswahl: WebP > JPEG > PNG
+    let tileFormat = 'png';
+    let tileExt = '.png';
+    
+    // Prüfe WebP-Unterstützung des Browsers
+    if (formats.includes('webp') && supportsWebP()) {
+        tileFormat = 'webp';
+        tileExt = '.webp';
+    } else if (formats.includes('jpeg')) {
+        tileFormat = 'jpeg';
+        tileExt = '.jpg';
+    }
+    
+    // Erstelle TileLayer mit Multi-Format-Fallback
+    const tileLayer = L.tileLayer('uploads/tiles/{z}/{x}/{y}' + tileExt, {
         tileSize: tileSize,
         maxNativeZoom: maxNativeZoom,
         minNativeZoom: minZoom,
@@ -311,27 +324,41 @@ function loadTileLayer(metadata) {
         noWrap: true,
         bounds: bounds,
         className: 'map-tile-layer',
-        errorTileUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==',
+        errorTileUrl: createErrorTile(),
         keepBuffer: 8,
         updateWhenZooming: false,
         updateWhenIdle: true,
         crossOrigin: true,
-        detectRetina: true
+        detectRetina: true,
+        // Progressives Laden
+        updateWhenZooming: false,
+        updateInterval: 150
+    });
+    
+    // Füge Fallback-Handler hinzu
+    tileLayer.on('tileerror', function(error) {
+        const tile = error.tile;
+        const originalSrc = tile.src;
+        
+        // Versuche Fallback zu PNG wenn WebP/JPEG fehlschlägt
+        if (tileFormat !== 'png' && originalSrc.indexOf('.png') === -1) {
+            tile.src = originalSrc.replace(tileExt, '.png');
+        }
     });
     
     tileLayer.addTo(map);
     
-    // Setze erweiterte Bounds mit etwas Padding
+    // Setze erweiterte Bounds mit Padding
     const paddedBounds = [
         [-height * 0.1, -width * 0.1],
         [height * 1.1, width * 1.1]
     ];
     map.setMaxBounds(paddedBounds);
     
-    // Zentriere Map auf das Bild
+    // Zentriere Map
     map.fitBounds(bounds, { padding: [20, 20] });
     
-    // Event-Listener für bessere Performance
+    // Event-Listener für Performance
     map.on('zoomstart', function() {
         document.body.style.cursor = 'wait';
     });
@@ -340,14 +367,103 @@ function loadTileLayer(metadata) {
         document.body.style.cursor = 'default';
     });
     
+    // Tile-Loading-Progress (optional)
+    let loadingTiles = 0;
+    tileLayer.on('tileloadstart', function() {
+        loadingTiles++;
+        updateLoadingIndicator(true);
+    });
+    
+    tileLayer.on('tileload', function() {
+        loadingTiles--;
+        if (loadingTiles === 0) {
+            updateLoadingIndicator(false);
+        }
+    });
+    
+    tileLayer.on('tileerror', function() {
+        loadingTiles--;
+        if (loadingTiles === 0) {
+            updateLoadingIndicator(false);
+        }
+    });
+    
     console.log('Tile-System geladen:', {
-        ...metadata,
+        version: metadata.version || '2.0',
+        format: tileFormat,
+        tileSize: tileSize,
+        zoomLevels: (maxNativeZoom - minZoom + 1),
+        tiles: metadata.tilesGenerated,
+        size: metadata.estimatedSize,
+        executionTime: metadata.executionTime,
         bounds: bounds,
         optimalZoom: optimalZoom
     });
 }
 
+// WebP-Unterstützung prüfen
+function supportsWebP() {
+    if (typeof supportsWebP.result !== 'undefined') {
+        return supportsWebP.result;
+    }
+    
+    const canvas = document.createElement('canvas');
+    if (canvas.getContext && canvas.getContext('2d')) {
+        supportsWebP.result = canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0;
+        return supportsWebP.result;
+    }
+    
+    supportsWebP.result = false;
+    return false;
+}
+
+// Error-Tile erstellen
+function createErrorTile() {
+    const canvas = document.createElement('canvas');
+    canvas.width = 256;
+    canvas.height = 256;
+    const ctx = canvas.getContext('2d');
+    
+    // Halbtransparenter grauer Hintergrund
+    ctx.fillStyle = 'rgba(26, 26, 26, 0.5)';
+    ctx.fillRect(0, 0, 256, 256);
+    
+    // Diagonal-Streifen als Muster
+    ctx.strokeStyle = 'rgba(100, 100, 100, 0.3)';
+    ctx.lineWidth = 2;
+    for (let i = -256; i < 512; i += 20) {
+        ctx.beginPath();
+        ctx.moveTo(i, 0);
+        ctx.lineTo(i + 256, 256);
+        ctx.stroke();
+    }
+    
+    return canvas.toDataURL();
+}
+
+// Loading-Indikator aktualisieren
+function updateLoadingIndicator(loading) {
+    let indicator = document.getElementById('tile-loading-indicator');
+    
+    if (loading && !indicator) {
+        indicator = document.createElement('div');
+        indicator.id = 'tile-loading-indicator';
+        indicator.className = 'tile-loading';
+        indicator.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Lade Tiles...';
+        document.body.appendChild(indicator);
+    } else if (!loading && indicator) {
+        indicator.remove();
+    }
+}
+
 // Map initialisieren wenn Seite geladen
 document.addEventListener('DOMContentLoaded', function() {
     initMap();
+    
+    // Erweiterte Features initialisieren wenn verfügbar
+    if (typeof initExtendedMapFeatures === 'function' && window.mapConfig) {
+        setTimeout(function() {
+            initExtendedMapFeatures(map, window.mapConfig);
+        }, 500);
+    }
 });

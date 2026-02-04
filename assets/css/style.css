@@ -349,6 +349,306 @@ body {
     margin-left: 5px;
 }
 
+/* Extended Map Controls */
+/* Vertikaler Abstand zwischen Controls */
+.leaflet-top.leaflet-right .leaflet-control {
+    margin-bottom: 10px !important;
+}
+
+.leaflet-top.leaflet-left .leaflet-control {
+    margin-bottom: 10px !important;
+}
+
+.leaflet-control-coordinates {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    border: 1px solid var(--color-primary);
+}
+
+.leaflet-control-coordinates .coord-display {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.leaflet-control-search {
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 4px;
+    border: 1px solid var(--color-primary);
+}
+
+.coord-search-panel {
+    display: flex;
+    align-items: center;
+}
+
+.search-toggle,
+.leaflet-control-measure button,
+.leaflet-control-screenshot button,
+.draw-toggle,
+.draw-buttons button,
+#goto-btn {
+    background: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    border: none;
+    padding: 6px 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s;
+    border: 1px solid transparent;
+    min-width: 34px;
+    min-height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-toggle:hover,
+.leaflet-control-measure button:hover,
+.leaflet-control-screenshot button:hover,
+.draw-toggle:hover,
+.draw-buttons button:hover,
+#goto-btn:hover {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.leaflet-control-measure button.active,
+.draw-toggle.active {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+.search-inputs {
+    display: flex;
+    gap: 5px;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.95);
+    border-radius: 0 0 4px 4px;
+    border-top: 1px solid var(--color-primary);
+}
+
+.search-inputs input {
+    width: 70px;
+    padding: 6px 8px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid #666;
+    color: #fff;
+    border-radius: 3px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.search-inputs input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.search-inputs input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+#goto-btn {
+    padding: 6px 10px;
+    min-width: auto;
+}
+
+.draw-tools {
+    position: relative;
+}
+
+.draw-buttons {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    margin-left: 8px;
+    background: rgba(0, 0, 0, 0.95);
+    border-radius: 4px;
+    border: 2px solid var(--color-primary);
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    z-index: 1000;
+}
+
+.draw-buttons button {
+    width: 34px;
+    height: 34px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.leaflet-control-screenshot {
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 4px;
+    border: 1px solid var(--color-primary);
+}
+
+/* Fullscreen Control Styling */
+.leaflet-control-fullscreen {
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 4px;
+    border: 1px solid var(--color-primary);
+}
+
+.leaflet-control-fullscreen button {
+    background: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    border: none;
+    padding: 8px 10px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.leaflet-control-fullscreen button:hover {
+    background: var(--color-primary);
+}
+
+/* Scale Control Styling */
+.leaflet-control-scale {
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid var(--color-primary);
+    border-radius: 4px;
+    padding: 5px;
+    color: #fff;
+}
+
+.leaflet-control-scale-line {
+    border: 2px solid var(--color-primary);
+    border-top: none;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.5);
+    font-size: 11px;
+    padding: 2px 5px;
+}
+
+/* Mini-Map Styling */
+.leaflet-control-minimap {
+    border: 2px solid var(--color-primary);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+.leaflet-control-minimap-toggle-display {
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border: 1px solid var(--color-primary);
+}
+
+.leaflet-control-minimap-toggle-display:hover {
+    background: var(--color-primary);
+}
+
+/* Drawing Styles */
+.leaflet-interactive {
+    cursor: crosshair;
+}
+
+/* Popup Customization */
+.leaflet-popup-content-wrapper {
+    background: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    border: 1px solid var(--color-primary);
+    border-radius: 8px;
+    box-shadow: 0 3px 14px rgba(255, 0, 0, 0.4);
+}
+
+.leaflet-popup-tip {
+    background: rgba(0, 0, 0, 0.9);
+    border: 1px solid var(--color-primary);
+}
+
+.leaflet-popup-content {
+    margin: 12px;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.leaflet-popup-close-button {
+    color: #fff !important;
+}
+
+.leaflet-popup-close-button:hover {
+    color: var(--color-primary) !important;
+}
+
+/* Checkbox Grid for Settings */
+.checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 1px solid transparent;
+}
+
+.checkbox-label:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--color-primary);
+}
+
+.checkbox-label input[type="checkbox"] {
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.checkbox-label span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.checkbox-label i {
+    color: var(--color-primary);
+}
+
+/* Tile Loading Indicator */
+.tile-loading {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 20px;
+    border: 1px solid var(--color-primary);
+    box-shadow: 0 4px 12px rgba(255, 0, 0, 0.4);
+    z-index: 10000;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: fadeIn 0.3s;
+}
+
+.tile-loading i {
+    color: var(--color-primary);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .sidebar {
@@ -363,5 +663,17 @@ body {
         bottom: 10px;
         right: 10px;
         font-size: 12px;
+    }
+    
+    .checkbox-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .draw-buttons {
+        flex-direction: row;
+        left: 0;
+        top: 100%;
+        margin-left: 0;
+        margin-top: 5px;
     }
 }
