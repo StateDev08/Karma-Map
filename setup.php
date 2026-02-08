@@ -33,7 +33,7 @@ $success = [];
 // Pfade
 define('BASE_PATH', __DIR__);
 define('CONFIG_FILE', BASE_PATH . '/includes/config.php');
-define('SCHEMA_FILE', BASE_PATH . '/database/schema.sql');
+define('SCHEMA_FILE', BASE_PATH . '/database/install.sql');
 
 // Setup-Schritte durchführen
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

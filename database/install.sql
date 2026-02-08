@@ -1,8 +1,12 @@
--- PAX DEI Map - Datenbank Schema
--- Erstellt: 01.02.2026
+﻿-- PAX DEI Map - Komplettes Datenbank Schema & Initialisierung
+-- Erstellt: 08.02.2026 (Zusammengefügt aus schema.sql, update_v2.2.0.sql und karma_update.sql)
 
 CREATE DATABASE IF NOT EXISTS pax_die_map CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE pax_die_map;
+
+-- ############################################################
+-- 1. TABELLEN-STRUKTUR
+-- ############################################################
 
 -- Benutzer-Tabelle (nur Admins)
 CREATE TABLE IF NOT EXISTS users (
@@ -119,7 +123,28 @@ CREATE TABLE IF NOT EXISTS settings (
     INDEX idx_key (setting_key)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Standard-Einstellungen einfügen
+-- Tabelle für Karma-Seiteninhalte
+CREATE TABLE IF NOT EXISTS karma_content (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    section VARCHAR(100) NOT NULL UNIQUE,
+    title VARCHAR(255),
+    content TEXT,
+    is_visible TINYINT(1) DEFAULT 1,
+    sort_order INT DEFAULT 0,
+    updated_by INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (updated_by) REFERENCES users(id) ON DELETE SET NULL,
+    INDEX idx_section (section),
+    INDEX idx_visible (is_visible),
+    INDEX idx_sort (sort_order)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- ############################################################
+-- 2. STANDARD-DATEN (EINSTELLUNGEN)
+-- ############################################################
+
 INSERT INTO settings (setting_key, setting_value, description) VALUES
 ('site_title', 'PAX DEI Map - KARMA', 'Website-Titel'),
 ('primary_color', '#FF0000', 'Primärfarbe (Rot)'),
@@ -148,7 +173,19 @@ INSERT INTO settings (setting_key, setting_value, description) VALUES
 ('map_double_click_zoom', '1', 'Doppelklick-Zoom aktiviert'),
 ('map_scroll_wheel_zoom', '1', 'Mausrad-Zoom aktiviert'),
 ('map_marker_clustering', '0', 'Marker-Clustering aktiviert'),
-('map_auto_pan', '1', 'Auto-Pan bei Marker-Klick');
+('map_auto_pan', '1', 'Auto-Pan bei Marker-Klick'),
+('karma_enabled', '1', 'Karma-Startseite aktiviert'),
+('karma_background_image', '', 'Hintergrundbild für Karma-Seite'),
+('karma_hero_logo', '', 'Hero-Logo für Karma-Seite'),
+('karma_show_map_link', '1', 'Map-Link in Navigation anzeigen'),
+('karma_hero_overlay', '0.3', 'Hero-Sektion Overlay-Transparenz (0-1)'),
+('karma_theme', 'dark', 'Theme der Karma-Seite (dark/light)'),
+('karma_discord_link', '', 'Discord-Einladungslink');
+
+
+-- ############################################################
+-- 3. BERECHTIGUNGEN & ROLLEN
+-- ############################################################
 
 -- Standard-Berechtigungen
 INSERT INTO permissions (name, description, category) VALUES
@@ -158,81 +195,67 @@ INSERT INTO permissions (name, description, category) VALUES
 ('users.edit', 'Benutzer bearbeiten', 'users'),
 ('users.delete', 'Benutzer löschen', 'users'),
 ('users.manage_roles', 'Rollen verwalten', 'users'),
-
 -- Marker Management
 ('markers.view', 'Marker anzeigen', 'markers'),
 ('markers.create', 'Marker erstellen', 'markers'),
 ('markers.edit', 'Marker bearbeiten', 'markers'),
 ('markers.delete', 'Marker löschen', 'markers'),
-
 -- Guild Management
 ('guilds.view', 'Gilden anzeigen', 'guilds'),
 ('guilds.create', 'Gilden erstellen', 'guilds'),
 ('guilds.edit', 'Gilden bearbeiten', 'guilds'),
 ('guilds.delete', 'Gilden löschen', 'guilds'),
-
 -- Marker Types
 ('marker_types.view', 'Marker-Typen anzeigen', 'marker_types'),
 ('marker_types.create', 'Marker-Typen erstellen', 'marker_types'),
 ('marker_types.edit', 'Marker-Typen bearbeiten', 'marker_types'),
 ('marker_types.delete', 'Marker-Typen löschen', 'marker_types'),
-
 -- Map Management
 ('map.upload', 'Map hochladen', 'map'),
 ('map.generate_tiles', 'Tiles generieren', 'map'),
-
 -- Settings
 ('settings.view', 'Einstellungen anzeigen', 'settings'),
-('settings.edit', 'Einstellungen bearbeiten', 'settings');
+('settings.edit', 'Einstellungen bearbeiten', 'settings'),
+-- Karma Management
+('karma.view', 'Karma-Inhalte anzeigen', 'karma'),
+('karma.edit', 'Karma-Inhalte bearbeiten', 'karma');
 
--- Berechtigungen für Super Admin (hat alle Rechte)
+-- Rollen-Berechtigungen
+-- Super Admin
 INSERT INTO role_permissions (role, permission_name) 
 SELECT 'super_admin', name FROM permissions;
 
--- Berechtigungen für Admin (fast alle Rechte außer User-Rollen-Verwaltung)
+-- Admin
 INSERT INTO role_permissions (role, permission_name) VALUES
-('admin', 'users.view'),
-('admin', 'users.create'),
-('admin', 'users.edit'),
-('admin', 'markers.view'),
-('admin', 'markers.create'),
-('admin', 'markers.edit'),
-('admin', 'markers.delete'),
-('admin', 'guilds.view'),
-('admin', 'guilds.create'),
-('admin', 'guilds.edit'),
-('admin', 'guilds.delete'),
-('admin', 'marker_types.view'),
-('admin', 'marker_types.create'),
-('admin', 'marker_types.edit'),
-('admin', 'marker_types.delete'),
-('admin', 'map.upload'),
-('admin', 'map.generate_tiles'),
-('admin', 'settings.view'),
-('admin', 'settings.edit');
+('admin', 'users.view'), ('admin', 'users.create'), ('admin', 'users.edit'),
+('admin', 'markers.view'), ('admin', 'markers.create'), ('admin', 'markers.edit'), ('admin', 'markers.delete'),
+('admin', 'guilds.view'), ('admin', 'guilds.create'), ('admin', 'guilds.edit'), ('admin', 'guilds.delete'),
+('admin', 'marker_types.view'), ('admin', 'marker_types.create'), ('admin', 'marker_types.edit'), ('admin', 'marker_types.delete'),
+('admin', 'map.upload'), ('admin', 'map.generate_tiles'),
+('admin', 'settings.view'), ('admin', 'settings.edit'),
+('admin', 'karma.view'), ('admin', 'karma.edit');
 
--- Berechtigungen für Moderator (Marker und Gilden verwalten)
+-- Moderator
 INSERT INTO role_permissions (role, permission_name) VALUES
 ('moderator', 'users.view'),
-('moderator', 'markers.view'),
-('moderator', 'markers.create'),
-('moderator', 'markers.edit'),
-('moderator', 'markers.delete'),
-('moderator', 'guilds.view'),
-('moderator', 'guilds.create'),
-('moderator', 'guilds.edit'),
+('moderator', 'markers.view'), ('moderator', 'markers.create'), ('moderator', 'markers.edit'), ('moderator', 'markers.delete'),
+('moderator', 'guilds.view'), ('moderator', 'guilds.create'), ('moderator', 'guilds.edit'),
 ('moderator', 'marker_types.view'),
 ('moderator', 'map.upload'),
-('moderator', 'settings.view');
+('moderator', 'settings.view'),
+('moderator', 'karma.view');
 
--- Berechtigungen für Editor (nur Marker bearbeiten)
+-- Editor
 INSERT INTO role_permissions (role, permission_name) VALUES
-('editor', 'markers.view'),
-('editor', 'markers.create'),
-('editor', 'markers.edit'),
+('editor', 'markers.view'), ('editor', 'markers.create'), ('editor', 'markers.edit'),
 ('editor', 'guilds.view'),
 ('editor', 'marker_types.view'),
 ('editor', 'settings.view');
+
+
+-- ############################################################
+-- 4. INHALTE (MARER-TYPEN, GILDEN, KARMA)
+-- ############################################################
 
 -- Standard-Marker-Typen
 INSERT INTO marker_types (name, icon, color, description, sort_order) VALUES
@@ -248,3 +271,11 @@ INSERT INTO marker_types (name, icon, color, description, sort_order) VALUES
 -- KARMA Gilde als Standard
 INSERT INTO guilds (name, tag, description, color, leader_name, is_active) VALUES
 ('KARMA', 'KARMA', 'Die mächtigste Gilde von PAX DEI', '#DC143C', 'Guild Master', 1);
+
+-- Standard Karma-Sektionen
+INSERT INTO karma_content (section, title, content, is_visible, sort_order) VALUES
+('hero', 'Willkommen bei KARMA', '<h1>KARMA</h1><p>Die mächtigste Gilde von PAX DEI</p>', 1, 1),
+('about', 'Über Uns', '<h2>Über KARMA</h2><p>KARMA ist die führende Gilde in PAX DEI. Wir dominieren die Karte und verteidigen unser Territorium mit eiserner Faust.</p>', 1, 2),
+('features', 'Unsere Stärken', '<h2>Was uns auszeichnet</h2><ul><li>Erfahrene Leader</li><li>Aktive Community</li><li>Strategische Dominanz</li><li>Teamwork und Zusammenhalt</li></ul>', 1, 3),
+('join', 'Mitglied werden', '<h2>Werde Teil von KARMA</h2><p>Interessiert daran, der Elite beizutreten? Kontaktiere unsere Rekrutierungsoffiziere und beweise deine Würdigkeit.</p>', 1, 4),
+('stats', 'Statistiken', '<h2>Unsere Erfolge</h2><p>Territorien: 15+<br>Aktive Mitglieder: 100+<br>Gewonnene Schlachten: 500+</p>', 1, 5);
