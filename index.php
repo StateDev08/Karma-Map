@@ -42,6 +42,11 @@ $discordLink = getSetting('karma_discord_link', '');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo e(getSetting('site_title', 'KARMA - PAX DEI')); ?></title>
     
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     
@@ -54,10 +59,17 @@ $discordLink = getSetting('karma_discord_link', '');
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Open Sans', sans-serif;
             line-height: 1.6;
             color: <?php echo $karmaTheme === 'dark' ? '#fff' : '#333'; ?>;
             background: <?php echo $karmaTheme === 'dark' ? '#0a0a0a' : '#f4f4f4'; ?>;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .logo {
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         /* Navigation */
@@ -65,10 +77,14 @@ $discordLink = getSetting('karma_discord_link', '');
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             padding: 1rem 2rem;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
         }
         
         .navbar .container {
@@ -187,12 +203,24 @@ $discordLink = getSetting('karma_discord_link', '');
             font-size: 5rem;
             margin-bottom: 1rem;
             color: <?php echo e(getSetting('primary_color', '#DC143C')); ?>;
-            text-shadow: 0 0 20px rgba(220, 20, 60, 0.5);
+            text-shadow: 0 0 20px rgba(220, 20, 60, 0.5), 0 0 40px rgba(220, 20, 60, 0.3);
+            animation: fadeInDown 1s ease-out;
         }
         
         .hero p {
             font-size: 1.5rem;
             margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.3s backwards;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .btn {
@@ -245,13 +273,18 @@ $discordLink = getSetting('karma_discord_link', '');
         
         /* Content Sections */
         .section {
-            padding: 5rem 2rem;
+            padding: 8rem 2rem;
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
         }
         
         .section:nth-child(even) {
-            background: <?php echo $karmaTheme === 'dark' ? '#0f0f0f' : '#fff'; ?>;
+            background: <?php echo $karmaTheme === 'dark' ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)'; ?>;
+            border-radius: 20px;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(5px);
         }
         
         .section h2 {

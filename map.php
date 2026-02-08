@@ -53,7 +53,7 @@ $isAdmin = Auth::check();
                 <img src="<?php echo e($logoImage); ?>" alt="Logo" class="logo-image">
             <?php endif; ?>
             
-            <p class="subtitle">PAX DEI Map</p>
+            <p class="subtitle" style="color: var(--text-secondary); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;">PAX DEI Map</p>
         </div>
         
         <div class="sidebar-section">
@@ -100,7 +100,7 @@ $isAdmin = Auth::check();
             </div>
         </div>
         
-        <div class="sidebar-footer">
+        <div class="sidebar-footer" style="padding: 1.5rem; display: flex; flex-direction: column; gap: 0.8rem;">
             <button type="button" class="btn btn-primary sidebar-close-mobile" id="sidebarCloseMobile" aria-label="Filter schließen">
                 <i class="fas fa-check"></i> Übernehmen
             </button>
