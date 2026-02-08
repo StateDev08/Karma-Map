@@ -1,9 +1,24 @@
 <?php
 /**
- * PAX Die Map - Installation Setup
+ * PAX DEI Map - Installation Setup
  * Einfache Installation mit Web-Interface
  */
 
+// Session für lokale Umgebung robuster machen (Cookie-Pfad, Schreiben vor Redirect)
+$sessionPath = dirname($_SERVER['SCRIPT_NAME'] ?? '');
+if ($sessionPath === '/' || $sessionPath === '\\') {
+    $sessionPath = '/';
+} else {
+    $sessionPath = rtrim($sessionPath, '/\\') . '/';
+}
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path'     => $sessionPath,
+    'domain'   => '',
+    'secure'   => !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off',
+    'httponly' => true,
+    'samesite' => 'Lax'
+]);
 session_start();
 
 // Fehlerberichterstattung für Setup
@@ -52,7 +67,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $success[] = "Datenbankverbindung erfolgreich!";
             $success[] = "Datenbank '{$dbName}' wurde erstellt/gefunden.";
             
-            // Weiter zu Schritt 2
+            // Session vor Redirect schreiben (wichtig v. a. lokal)
+            session_write_close();
             header('Location: ?step=install');
             exit;
             
@@ -67,6 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         if (!$setup) {
             $errors[] = "Setup-Daten fehlen. Bitte starte von vorne.";
+            $errors[] = "Lokal oft: Session geht beim Weiterleiten verloren. Gehe auf „Zurück“, trage die Datenbank-Daten erneut ein, klicke auf „Verbindung testen & weiter“, dann sofort „Jetzt installieren“.";
         } else {
             try {
                 // Datenbank-Verbindung
@@ -104,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $success[] = count($tables) . " Tabellen wurden erstellt.";
                 $success[] = "Standard-Daten wurden eingefügt.";
                 
-                // Weiter zu Schritt 3
+                session_write_close();
                 header('Location: ?step=admin');
                 exit;
                 
@@ -162,7 +179,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 $success[] = "Admin-User erfolgreich erstellt!";
                 
-                // Weiter zu Schritt 4
+                session_write_close();
                 header('Location: ?step=config');
                 exit;
                 }
@@ -178,7 +195,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $setup = $_SESSION['setup'] ?? null;
         
         if (!$setup) {
-            $errors[] = "Setup-Daten fehlen!";
+            $errors[] = "Setup-Daten fehlen! Bitte starte die Installation wieder bei Schritt 1 (Datenbank).";
         } else {
             try {
                 // Upload-Verzeichnis erstellen
@@ -208,7 +225,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 $success[] = "Konfigurationsdatei erstellt!";
                 
-                // Weiter zu Fertig
+                session_write_close();
                 header('Location: ?step=complete');
                 exit;
                 
@@ -229,7 +246,7 @@ function generateConfigFile($setup) {
     return <<<PHP
 <?php
 /**
- * PAX Die Map - Konfigurationsdatei
+ * PAX DEI Map - Konfigurationsdatei
  * Automatisch generiert am: {date('d.m.Y H:i:s')}
  */
 
@@ -280,7 +297,7 @@ PHP;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PAX Die Map - Installation</title>
+    <title>PAX DEI Map - Installation</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <style>
         :root {
@@ -550,7 +567,7 @@ PHP;
         <div class="setup-box">
             <div class="header">
                 <h1><i class="fas fa-shield-alt"></i> KARMA</h1>
-                <p>PAX Die Map Installation</p>
+                <p>PAX DEI Map Installation</p>
             </div>
             
             <!-- Progress Bar -->
@@ -755,7 +772,7 @@ PHP;
                     <h2 style="text-align: center;">Installation erfolgreich!</h2>
                     
                     <p style="color: var(--text-secondary); margin-bottom: 20px; text-align: center;">
-                        PAX Die Map wurde erfolgreich installiert und ist einsatzbereit.
+                        PAX DEI Map wurde erfolgreich installiert und ist einsatzbereit.
                     </p>
                     
                     <div class="info-box">

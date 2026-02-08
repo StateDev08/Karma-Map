@@ -1,4 +1,4 @@
--- PAX Die Map - Datenbank Schema
+-- PAX DEI Map - Datenbank Schema
 -- Erstellt: 01.02.2026
 
 CREATE DATABASE IF NOT EXISTS pax_die_map CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS settings (
 
 -- Standard-Einstellungen einfügen
 INSERT INTO settings (setting_key, setting_value, description) VALUES
-('site_title', 'PAX Die Map - KARMA', 'Website-Titel'),
+('site_title', 'PAX DEI Map - KARMA', 'Website-Titel'),
 ('primary_color', '#FF0000', 'Primärfarbe (Rot)'),
 ('secondary_color', '#000000', 'Sekundärfarbe (Schwarz)'),
 ('accent_color', '#DC143C', 'Akzentfarbe'),
@@ -247,4 +247,4 @@ INSERT INTO marker_types (name, icon, color, description, sort_order) VALUES
 
 -- KARMA Gilde als Standard
 INSERT INTO guilds (name, tag, description, color, leader_name, is_active) VALUES
-('KARMA', 'KARMA', 'Die mächtigste Gilde von PAX Die', '#DC143C', 'Guild Master', 1);
+('KARMA', 'KARMA', 'Die mächtigste Gilde von PAX DEI', '#DC143C', 'Guild Master', 1);

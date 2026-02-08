@@ -1,7 +1,8 @@
-// PAX Die Map - Map JavaScript mit Leaflet.js
+// PAX DEI Map - Map JavaScript mit Leaflet.js
 
 let map;
 let markers = [];
+let allMarkerData = [];
 let currentFilters = {
     types: new Set(),
     guilds: new Set()
@@ -10,14 +11,16 @@ let currentFilters = {
 // Map initialisieren
 function initMap() {
     const mapConfig = window.mapConfig || {};
+    const minZ = mapConfig.minZoom !== undefined ? mapConfig.minZoom : -2;
+    const maxZ = mapConfig.maxZoom !== undefined ? mapConfig.maxZoom : 15;
     
-    // Leaflet Map erstellen
+    var isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     map = L.map('map', {
         crs: L.CRS.Simple,
-        minZoom: mapConfig.minZoom !== undefined ? mapConfig.minZoom : -2,
-        maxZoom: 15,
+        minZoom: minZ,
+        maxZoom: maxZ,
         zoom: mapConfig.defaultZoom || 2,
-        center: [0, 0],
+        center: [mapConfig.defaultPositionY || 0, mapConfig.defaultPositionX || 0],
         zoomControl: true,
         attributionControl: false,
         zoomSnap: 0.1,
@@ -29,20 +32,20 @@ function initMap() {
         fadeAnimation: true,
         markerZoomAnimation: true,
         inertia: true,
-        inertiaDeceleration: 3000,
-        inertiaMaxSpeed: 1500,
+        inertiaDeceleration: isTouch ? 2000 : 3000,
+        inertiaMaxSpeed: isTouch ? 2000 : 1500,
         worldCopyJump: false,
         maxBoundsViscosity: 0.5,
         preferCanvas: false,
-        doubleClickZoom: 'center'
+        doubleClickZoom: 'center',
+        touchZoom: true,
+        bounceAtZoomLimits: true
     });
+    document.getElementById('map').style.touchAction = 'none';
     
-    // Map-Hintergrundbild oder Tiles laden
     if (mapConfig.useTiles && mapConfig.tileMetadata) {
-        // Verwende Tile-System für höchste Qualität
         loadTileLayer(mapConfig.tileMetadata);
     } else if (mapConfig.mapImage) {
-        // Fallback: Einzelnes Bild
         const img = new Image();
         img.onload = function() {
             const bounds = [[0, 0], [this.height, this.width]];
@@ -52,11 +55,11 @@ function initMap() {
                 crossOrigin: true
             }).addTo(map);
             map.fitBounds(bounds);
+            maybeFitMarkersAfterLoad();
         };
         img.crossOrigin = 'anonymous';
         img.src = mapConfig.mapImage;
     } else {
-        // Fallback: Einfacher grauer Hintergrund
         const bounds = [[0, 0], [1000, 1000]];
         const svgData = `
             <svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000">
@@ -72,11 +75,33 @@ function initMap() {
         map.fitBounds(bounds);
     }
     
-    // Marker laden
+    showMarkerStatus(null, 'loading');
     loadMarkers();
-    
-    // Filter-Events
     setupFilters();
+    setupMapControls();
+}
+
+function maybeFitMarkersAfterLoad() {
+    if (markers.length === 0) return;
+    var bounds = L.latLngBounds(markers.map(function(m) { return m.getLatLng(); }));
+    if (bounds.isValid()) {
+        map.fitBounds(bounds, { padding: [40, 40], maxZoom: map.getMaxZoom() - 1 });
+    }
+}
+
+function setupMapControls() {
+    var container = document.getElementById('mapStatus');
+    if (!container) return;
+    var btn = container.querySelector('.map-fit-bounds-btn');
+    if (btn) {
+        btn.addEventListener('click', function() {
+            if (markers.length === 0) return;
+            var bounds = L.latLngBounds(markers.map(function(m) { return m.getLatLng(); }));
+            if (bounds.isValid()) {
+                map.fitBounds(bounds, { padding: [50, 50], maxZoom: 14, animate: true });
+            }
+        });
+    }
 }
 
 // Marker vom Server laden
@@ -85,70 +110,92 @@ async function loadMarkers() {
         const response = await fetch('api/markers.php');
         const data = await response.json();
         
-        console.log('Marker API Response:', data);
-        console.log('Anzahl Marker:', data.markers ? data.markers.length : 0);
-        
-        if (data.success) {
+        if (data.success && data.markers) {
+            allMarkerData = data.markers;
             displayMarkers(data.markers);
+            showMarkerStatus(markers.length, null);
         } else {
-            console.error('API Fehler:', data.error);
+            showMarkerStatus(0, 'error');
+            if (data && data.error) console.error('API:', data.error);
         }
     } catch (error) {
-        console.error('Fehler beim Laden der Marker:', error);
+        showMarkerStatus(0, 'error');
+        console.error('Marker laden:', error);
+    }
+}
+
+function showMarkerStatus(count, state) {
+    var el = document.getElementById('mapStatus');
+    if (!el) return;
+    var text = el.querySelector('.map-status-text');
+    var btn = el.querySelector('.map-fit-bounds-btn');
+    if (state === 'loading') {
+        if (text) text.textContent = 'Lade Marker…';
+        if (btn) btn.style.visibility = 'hidden';
+        el.classList.remove('error');
+        el.classList.add('loading');
+    } else if (state === 'error') {
+        if (text) text.textContent = 'Marker konnten nicht geladen werden';
+        if (btn) btn.style.visibility = 'hidden';
+        el.classList.add('error');
+        el.classList.remove('loading');
+    } else {
+        el.classList.remove('loading', 'error');
+        if (text) text.textContent = count === 1 ? '1 Marker' : count + ' Marker';
+        if (btn) btn.style.visibility = count > 0 ? 'visible' : 'hidden';
     }
 }
 
 // Marker auf der Map anzeigen
 function displayMarkers(markerData) {
-    console.log('displayMarkers aufgerufen mit', markerData.length, 'Markern');
-    
-    // Bestehende Marker entfernen
-    markers.forEach(marker => map.removeLayer(marker));
+    markers.forEach(function(marker) { map.removeLayer(marker); });
     markers = [];
     
-    // Neue Marker hinzufügen
-    markerData.forEach(data => {
-        console.log('Verarbeite Marker:', data);
+    if (!markerData || !markerData.length) {
+        showMarkerStatus(0, null);
+        return;
+    }
+    
+    markerData.forEach(function(data) {
+        if (!shouldShowMarker(data)) return;
         
-        // Prüfen ob Marker gefiltert werden soll
-        if (!shouldShowMarker(data)) {
-            console.log('Marker gefiltert:', data.name);
-            return;
-        }
+        var iconHtml = '<div class="marker-icon-inner" style="color: ' + (data.type_color || '#FF0000') + '">' +
+            '<i class="fas fa-' + (data.icon || 'map-marker-alt') + '"></i></div>';
         
-        console.log('Füge Marker hinzu:', data.name, 'Position:', data.x_position, data.y_position);
-        
-        // Icon erstellen
-        const iconHtml = `
-            <div style="font-size: 24px; color: ${data.type_color || '#FF0000'}; 
-                 text-shadow: 0 0 3px #000, 0 0 5px #000;">
-                <i class="fas fa-${data.icon || 'map-marker-alt'}"></i>
-            </div>
-        `;
-        
-        const customIcon = L.divIcon({
+        var customIcon = L.divIcon({
             html: iconHtml,
             className: 'custom-marker-icon',
-            iconSize: [30, 30],
-            iconAnchor: [15, 15]
+            iconSize: [32, 32],
+            iconAnchor: [16, 32],
+            popupAnchor: [0, -32]
         });
         
-        // Marker erstellen
-        const marker = L.marker([data.y_position, data.x_position], {
+        var marker = L.marker([data.y_position, data.x_position], {
             icon: customIcon,
             title: data.name
         });
         
-        // Popup-Content
-        const popupContent = createPopupContent(data);
+        var popupContent = createPopupContent(data);
         marker.bindPopup(popupContent, {
-            maxWidth: 300,
-            className: 'custom-popup'
+            maxWidth: 320,
+            className: 'custom-popup',
+            autoPan: true,
+            autoPanPadding: [40, 40],
+            autoPanSpeed: 10,
+            closeButton: true
+        });
+        
+        marker.on('popupopen', function() {
+            markers.forEach(function(m) {
+                if (m !== marker && m.isPopupOpen()) m.closePopup();
+            });
         });
         
         marker.addTo(map);
         markers.push(marker);
     });
+    
+    showMarkerStatus(markers.length, null);
 }
 
 // Popup-Inhalt erstellen
@@ -357,8 +404,8 @@ function loadTileLayer(metadata) {
     
     // Zentriere Map
     map.fitBounds(bounds, { padding: [20, 20] });
+    setTimeout(maybeFitMarkersAfterLoad, 100);
     
-    // Event-Listener für Performance
     map.on('zoomstart', function() {
         document.body.style.cursor = 'wait';
     });

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - PAX Die Map</title>
+    <title>Admin Dashboard - PAX DEI Map</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link rel="stylesheet" href="../assets/css/admin.css">
 </head>
@@ -45,6 +45,9 @@
                 <a href="?page=map-upload" class="nav-item <?php echo $currentPage === 'map-upload' ? 'active' : ''; ?>">
                     <i class="fas fa-image"></i> Map hochladen
                 </a>
+                <a href="?page=karma" class="nav-item <?php echo $currentPage === 'karma' ? 'active' : ''; ?>">
+                    <i class="fas fa-home"></i> Karma-Seite
+                </a>
                 <?php if (Auth::hasPermission('users.view')): ?>
                 <a href="?page=users" class="nav-item <?php echo $currentPage === 'users' ? 'active' : ''; ?>">
                     <i class="fas fa-users"></i> Benutzerverwaltung
@@ -56,8 +59,11 @@
                 
                 <div class="nav-divider"></div>
                 
-                <a href="../" class="nav-item" target="_blank">
-                    <i class="fas fa-external-link-alt"></i> Zur Map
+                <a href="../index.php" class="nav-item" target="_blank">
+                    <i class="fas fa-home"></i> Zur Startseite
+                </a>
+                <a href="../map.php" class="nav-item" target="_blank">
+                    <i class="fas fa-map"></i> Zur Map
                 </a>
                 <a href="logout.php" class="nav-item">
                     <i class="fas fa-sign-out-alt"></i> Logout

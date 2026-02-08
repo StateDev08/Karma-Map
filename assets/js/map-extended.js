@@ -1,4 +1,4 @@
-// PAX Die Map - Extended Map Features
+// PAX DEI Map - Extended Map Features
 // Erweiterte Map-Funktionen und Werkzeuge
 
 let measurePath = null;

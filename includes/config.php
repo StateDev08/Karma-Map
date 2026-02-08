@@ -1,18 +1,18 @@
 <?php
 /**
- * PAX Die Map - Konfigurationsdatei
- * WICHTIG: Passe die Datenbank-Zugangsdaten an!
+ * PAX DEI Map - Konfigurationsdatei
+ * Automatisch generiert am: {date('d.m.Y H:i:s')}
  */
 
-// Fehlerberichterstattung (für Entwicklung)
+// Fehlerberichterstattung (für Produktion auf 0 setzen!)
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // Datenbank-Konfiguration
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'pax_die_map');
-define('DB_USER', 'root');          // ÄNDERN!
-define('DB_PASS', '');              // ÄNDERN!
+define('DB_NAME', 'karma');
+define('DB_USER', 'karma');
+define('DB_PASS', '$kvJs?p6ob5O0cSc');
 define('DB_CHARSET', 'utf8mb4');
 
 // Pfade

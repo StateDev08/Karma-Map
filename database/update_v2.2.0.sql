@@ -1,4 +1,4 @@
--- Update-Script für PAX Die Map v2.2.0
+-- Update-Script für PAX DEI Map v2.2.0
 -- Fügt neue Map-Settings zur bestehenden Datenbank hinzu
 
 USE pax_die_map;

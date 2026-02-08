@@ -1,0 +1,523 @@
+
+    Verzeichnis: C:\Users\drago\Documents\GitHub\Karma-Map
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        07.02.2026     17:06                admin
+d-----        07.02.2026     17:06                api
+d-----        07.02.2026     17:06                assets
+d-----        07.02.2026     17:06                database
+d-----        07.02.2026     17:06                includes
+d-----        07.02.2026     17:06                public
+d-----        07.02.2026     17:06                uploads
+-a----        05.02.2026     19:39            243 .gitignore
+-a----        05.02.2026     19:39            445 .htaccess
+-a----        05.02.2026     19:39          11388 index.php
+-a----        07.02.2026     09:07          12435 map.php
+-a----        05.02.2026     19:39          19026 README.backup.md
+-a----        05.02.2026     19:39          19026 README.md
+-a----        07.02.2026     09:14          32474 setup.php
+-a----        07.02.2026     09:17       36917029 uploads.zip
+    Verzeichnis: C:\Users\drago\Documents\GitHub\Karma-Map\admin
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        07.02.2026     17:06                pages
+d-----        07.02.2026     17:06                uploads
+-a----        05.02.2026     19:39           3944 index.php
+-a----        05.02.2026     19:39           2808 login.php
+-a----        05.02.2026     19:39            165 logout.php
+    Verzeichnis: C:\Users\drago\Documents\GitHub\Karma-Map\admin\pages
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     19:39           4500 dashboard.php
+-a----        05.02.2026     19:39           9413 guilds.php
+-a----        05.02.2026     19:57          21098 karma.php
+-a----        05.02.2026     19:39          13829 map-upload.php
+-a----        05.02.2026     19:39           9131 marker-types.php
+-a----        05.02.2026     19:39          16745 markers.php
+-a----        05.02.2026     19:39          16927 settings.php
+-a----        05.02.2026     19:39          23115 users.php
+    Verzeichnis: C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        07.02.2026     17:06                tiles
+    Verzeichnis: C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        07.02.2026     17:06                0
+d-----        07.02.2026     17:06                1
+d-----        07.02.2026     17:06                10
+d-----        07.02.2026     17:06                2
+d-----        07.02.2026     17:06                3
+d-----        07.02.2026     17:06                4
+d-----        07.02.2026     17:06                5
+d-----        07.02.2026     17:06                6
+d-----        07.02.2026     17:06                7
+d-----        07.02.2026     17:06                8
+d-----        07.02.2026     17:06                9
+-a----        05.02.2026     20:20            412 metadata.json
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\0
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        07.02.2026     17:06                0
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\0\0
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     20:20           4806 0.jpg
+-a----        05.02.2026     20:20           1171 0.png
+-a----        05.02.2026     20:20            612 0.webp
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\1
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        07.02.2026     17:06                0
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\1\0
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     20:20           4816 0.jpg
+-a----        05.02.2026     20:20           1263 0.png
+-a----        05.02.2026     20:20            640 0.webp
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\10
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        07.02.2026     17:06                0
+d-----        07.02.2026     17:06                1
+d-----        07.02.2026     17:06                2
+d-----        07.02.2026     17:06                3
+d-----        07.02.2026     17:06                4
+d-----        07.02.2026     17:06                5
+d-----        07.02.2026     17:06                6
+d-----        07.02.2026     17:06                7
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\10\0
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     20:19          57647 0.jpg
+-a----        05.02.2026     20:19         462741 0.png
+-a----        05.02.2026     20:19          67016 0.webp
+-a----        05.02.2026     20:19          55680 1.jpg
+-a----        05.02.2026     20:19         453458 1.png
+-a----        05.02.2026     20:19          65304 1.webp
+-a----        05.02.2026     20:19          56774 2.jpg
+-a----        05.02.2026     20:19         462185 2.png
+-a----        05.02.2026     20:19          66576 2.webp
+-a----        05.02.2026     20:19          56135 3.jpg
+-a----        05.02.2026     20:19         467446 3.png
+-a----        05.02.2026     20:19          65616 3.webp
+-a----        05.02.2026     20:19          16242 4.jpg
+-a----        05.02.2026     20:19         103627 4.png
+-a----        05.02.2026     20:19          13180 4.webp
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\10\1
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     20:19          65256 0.jpg
+-a----        05.02.2026     20:19         479445 0.png
+-a----        05.02.2026     20:19          79838 0.webp
+-a----        05.02.2026     20:19          62837 1.jpg
+-a----        05.02.2026     20:19         482593 1.png
+-a----        05.02.2026     20:19          76822 1.webp
+-a----        05.02.2026     20:19          54673 2.jpg
+-a----        05.02.2026     20:19         453714 2.png
+-a----        05.02.2026     20:19          63280 2.webp
+-a----        05.02.2026     20:19          44648 3.jpg
+-a----        05.02.2026     20:19         378901 3.png
+-a----        05.02.2026     20:19          49742 3.webp
+-a----        05.02.2026     20:19          14764 4.jpg
+-a----        05.02.2026     20:19          90410 4.png
+-a----        05.02.2026     20:19          11700 4.webp
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\10\2
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     20:19          57959 0.jpg
+-a----        05.02.2026     20:19         463379 0.png
+-a----        05.02.2026     20:19          67226 0.webp
+-a----        05.02.2026     20:19          61463 1.jpg
+-a----        05.02.2026     20:19         490880 1.png
+-a----        05.02.2026     20:19          70940 1.webp
+-a----        05.02.2026     20:19          58984 2.jpg
+-a----        05.02.2026     20:19         472529 2.png
+-a----        05.02.2026     20:19          64656 2.webp
+-a----        05.02.2026     20:19          54393 3.jpg
+-a----        05.02.2026     20:19         440223 3.png
+-a----        05.02.2026     20:19          61266 3.webp
+-a----        05.02.2026     20:19          19132 4.jpg
+-a----        05.02.2026     20:19         115897 4.png
+-a----        05.02.2026     20:19          16852 4.webp
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\10\3
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     20:19          54367 0.jpg
+-a----        05.02.2026     20:19         449345 0.png
+-a----        05.02.2026     20:19          61694 0.webp
+-a----        05.02.2026     20:19          33700 1.jpg
+-a----        05.02.2026     20:19         269941 1.png
+-a----        05.02.2026     20:19          33788 1.webp
+-a----        05.02.2026     20:19          48607 2.jpg
+-a----        05.02.2026     20:19         396424 2.png
+-a----        05.02.2026     20:19          50146 2.webp
+-a----        05.02.2026     20:19          56613 3.jpg
+-a----        05.02.2026     20:19         465044 3.png
+-a----        05.02.2026     20:19          65654 3.webp
+-a----        05.02.2026     20:19          18845 4.jpg
+-a----        05.02.2026     20:19         113923 4.png
+-a----        05.02.2026     20:19          16640 4.webp
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\10\4
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     20:19          40726 0.jpg
+-a----        05.02.2026     20:19         325967 0.png
+-a----        05.02.2026     20:19          43490 0.webp
+-a----        05.02.2026     20:19          35623 1.jpg
+-a----        05.02.2026     20:19         306865 1.png
+-a----        05.02.2026     20:19          36418 1.webp
+-a----        05.02.2026     20:19          55294 2.jpg
+-a----        05.02.2026     20:19         451778 2.png
+-a----        05.02.2026     20:19          61318 2.webp
+-a----        05.02.2026     20:19          58374 3.jpg
+-a----        05.02.2026     20:19         476916 3.png
+-a----        05.02.2026     20:19          69442 3.webp
+-a----        05.02.2026     20:19          15720 4.jpg
+-a----        05.02.2026     20:19         100199 4.png
+-a----        05.02.2026     20:19          12734 4.webp
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\10\5
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     20:19          27827 0.jpg
+-a----        05.02.2026     20:19         259587 0.png
+-a----        05.02.2026     20:19          27250 0.webp
+-a----        05.02.2026     20:19          36732 1.jpg
+-a----        05.02.2026     20:19         324362 1.png
+-a----        05.02.2026     20:19          39044 1.webp
+-a----        05.02.2026     20:19          50812 2.jpg
+-a----        05.02.2026     20:19         434015 2.png
+-a----        05.02.2026     20:19          59558 2.webp
+-a----        05.02.2026     20:19          52649 3.jpg
+-a----        05.02.2026     20:19         445065 3.png
+-a----        05.02.2026     20:19          63856 3.webp
+-a----        05.02.2026     20:19          15038 4.jpg
+-a----        05.02.2026     20:19          95638 4.png
+-a----        05.02.2026     20:19          11642 4.webp
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\10\6
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     20:19          52210 0.jpg
+-a----        05.02.2026     20:19         435333 0.png
+-a----        05.02.2026     20:19          62024 0.webp
+-a----        05.02.2026     20:19          49882 1.jpg
+-a----        05.02.2026     20:19         420897 1.png
+-a----        05.02.2026     20:19          58578 1.webp
+-a----        05.02.2026     20:19          47333 2.jpg
+-a----        05.02.2026     20:19         398193 2.png
+-a----        05.02.2026     20:19          53402 2.webp
+-a----        05.02.2026     20:19          55605 3.jpg
+-a----        05.02.2026     20:19         455198 3.png
+-a----        05.02.2026     20:19          65150 3.webp
+-a----        05.02.2026     20:19          15794 4.jpg
+-a----        05.02.2026     20:19          98762 4.png
+-a----        05.02.2026     20:19          12972 4.webp
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\10\7
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     20:19          27127 0.jpg
+-a----        05.02.2026     20:19         219871 0.png
+-a----        05.02.2026     20:19          25716 0.webp
+-a----        05.02.2026     20:19          23444 1.jpg
+-a----        05.02.2026     20:19         192476 1.png
+-a----        05.02.2026     20:19          21428 1.webp
+-a----        05.02.2026     20:19          19146 2.jpg
+-a----        05.02.2026     20:19         154433 2.png
+-a----        05.02.2026     20:19          16466 2.webp
+-a----        05.02.2026     20:19          29487 3.jpg
+-a----        05.02.2026     20:19         231652 3.png
+-a----        05.02.2026     20:19          28462 3.webp
+-a----        05.02.2026     20:19          10279 4.jpg
+-a----        05.02.2026     20:19          52221 4.png
+-a----        05.02.2026     20:19           6644 4.webp
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\2
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        07.02.2026     17:06                0
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\2\0
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     20:20           4852 0.jpg
+-a----        05.02.2026     20:20           1642 0.png
+-a----        05.02.2026     20:20            730 0.webp
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\3
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        07.02.2026     17:06                0
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\3\0
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     20:20           5131 0.jpg
+-a----        05.02.2026     20:20           3059 0.png
+-a----        05.02.2026     20:20           1124 0.webp
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\4
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        07.02.2026     17:06                0
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\4\0
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     20:20           5965 0.jpg
+-a----        05.02.2026     20:20           8323 0.png
+-a----        05.02.2026     20:20           2218 0.webp
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\5
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        07.02.2026     17:06                0
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\5\0
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     20:20           8732 0.jpg
+-a----        05.02.2026     20:20          25108 0.png
+-a----        05.02.2026     20:20           5824 0.webp
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\6
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        07.02.2026     17:06                0
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\6\0
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     20:20          18715 0.jpg
+-a----        05.02.2026     20:20          91086 0.png
+-a----        05.02.2026     20:20          18488 0.webp
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\7
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        07.02.2026     17:06                0
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\7\0
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     20:20          54501 0.jpg
+-a----        05.02.2026     20:20         331802 0.png
+-a----        05.02.2026     20:20          64836 0.webp
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\8
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        07.02.2026     17:06                0
+d-----        07.02.2026     17:06                1
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\8\0
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     20:20          97923 0.jpg
+-a----        05.02.2026     20:20         638348 0.png
+-a----        05.02.2026     20:20         125790 0.webp
+-a----        05.02.2026     20:20          10854 1.jpg
+-a----        05.02.2026     20:20          37708 1.png
+-a----        05.02.2026     20:20           8010 1.webp
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\8\1
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     20:20          69460 0.jpg
+-a----        05.02.2026     20:20         508397 0.png
+-a----        05.02.2026     20:20          89612 0.webp
+-a----        05.02.2026     20:20           9472 1.jpg
+-a----        05.02.2026     20:20          32343 1.png
+-a----        05.02.2026     20:20           6520 1.webp
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\9
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        07.02.2026     17:06                0
+d-----        07.02.2026     17:06                1
+d-----        07.02.2026     17:06                2
+d-----        07.02.2026     17:06                3
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\9\0
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     20:19          82512 0.jpg
+-a----        05.02.2026     20:19         584437 0.png
+-a----        05.02.2026     20:19         110714 0.webp
+-a----        05.02.2026     20:19          72790 1.jpg
+-a----        05.02.2026     20:19         551410 1.png
+-a----        05.02.2026     20:19          95220 1.webp
+-a----        05.02.2026     20:19          12096 2.jpg
+-a----        05.02.2026     20:19          62387 2.png
+-a----        05.02.2026     20:19          10346 2.webp
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\9\1
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     20:19          72964 0.jpg
+-a----        05.02.2026     20:19         527869 0.png
+-a----        05.02.2026     20:19          90742 0.webp
+-a----        05.02.2026     20:19          78136 1.jpg
+-a----        05.02.2026     20:19         557582 1.png
+-a----        05.02.2026     20:19          95828 1.webp
+-a----        05.02.2026     20:19          14838 2.jpg
+-a----        05.02.2026     20:19          71752 2.png
+-a----        05.02.2026     20:19          13090 2.webp
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\9\2
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     20:19          49458 0.jpg
+-a----        05.02.2026     20:19         409387 0.png
+-a----        05.02.2026     20:19          59666 0.webp
+-a----        05.02.2026     20:19          73329 1.jpg
+-a----        05.02.2026     20:19         553830 1.png
+-a----        05.02.2026     20:19          98930 1.webp
+-a----        05.02.2026     20:19          12200 2.jpg
+-a----        05.02.2026     20:19          61364 2.png
+-a----        05.02.2026     20:19          10150 2.webp
+    Verzeichnis:
+    C:\Users\drago\Documents\GitHub\Karma-Map\admin\uploads\tiles\9\3
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     20:19          50363 0.jpg
+-a----        05.02.2026     20:19         394573 0.png
+-a----        05.02.2026     20:19          63178 0.webp
+-a----        05.02.2026     20:20          50507 1.jpg
+-a----        05.02.2026     20:20         392532 1.png
+-a----        05.02.2026     20:20          62392 1.webp
+-a----        05.02.2026     20:20          10714 2.jpg
+-a----        05.02.2026     20:20          48783 2.png
+-a----        05.02.2026     20:20           8206 2.webp
+    Verzeichnis: C:\Users\drago\Documents\GitHub\Karma-Map\api
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     19:39            625 markers.php
+    Verzeichnis: C:\Users\drago\Documents\GitHub\Karma-Map\assets
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        07.02.2026     17:06                css
+d-----        07.02.2026     17:06                js
+    Verzeichnis: C:\Users\drago\Documents\GitHub\Karma-Map\assets\css
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     19:39          16779 admin.css
+-a----        07.02.2026     09:07          21092 style.css
+    Verzeichnis: C:\Users\drago\Documents\GitHub\Karma-Map\assets\js
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     19:39           3702 admin.js
+-a----        05.02.2026     19:39          16988 map-extended.js
+-a----        07.02.2026     09:07          16718 map.js
+    Verzeichnis: C:\Users\drago\Documents\GitHub\Karma-Map\database
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     19:39           2867 karma_update.sql
+-a----        05.02.2026     19:39          10077 schema.sql
+-a----        05.02.2026     19:39           1457 update_v2.2.0.sql
+    Verzeichnis: C:\Users\drago\Documents\GitHub\Karma-Map\includes
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     19:39           4812 auth.php
+-a----        05.02.2026     20:12           1213 config.php
+-a----        05.02.2026     19:39           2744 db.php
+-a----        05.02.2026     19:39           5041 functions.php
+-a----        05.02.2026     19:39          13488 tile-generator.php
+    Verzeichnis: C:\Users\drago\Documents\GitHub\Karma-Map\public
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        07.02.2026     17:06                admin
+d-----        07.02.2026     17:06                api
+d-----        07.02.2026     17:06                assets
+d-----        07.02.2026     17:06                includes
+-a----        05.02.2026     19:39           8539 index.php
+    Verzeichnis: C:\Users\drago\Documents\GitHub\Karma-Map\public\admin
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        07.02.2026     17:06                pages
+-a----        05.02.2026     19:39           3887 index.php
+-a----        05.02.2026     19:39           3124 login.php
+-a----        05.02.2026     19:39            443 logout.php
+    Verzeichnis: C:\Users\drago\Documents\GitHub\Karma-Map\public\admin\pages
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     19:39           4500 dashboard.php
+-a----        05.02.2026     19:39           9413 guilds.php
+-a----        05.02.2026     19:39          13829 map-upload.php
+-a----        05.02.2026     19:39           9131 marker-types.php
+-a----        05.02.2026     19:39          11358 markers.php
+-a----        05.02.2026     19:39          16927 settings.php
+    Verzeichnis: C:\Users\drago\Documents\GitHub\Karma-Map\public\api
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     19:39            896 markers.php
+    Verzeichnis: C:\Users\drago\Documents\GitHub\Karma-Map\public\assets
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        07.02.2026     17:06                css
+d-----        07.02.2026     17:06                js
+    Verzeichnis: C:\Users\drago\Documents\GitHub\Karma-Map\public\assets\css
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     19:39          16779 admin.css
+-a----        07.02.2026     09:09          20126 style.css
+    Verzeichnis: C:\Users\drago\Documents\GitHub\Karma-Map\public\assets\js
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     19:39           3702 admin.js
+-a----        05.02.2026     19:39          16988 map-extended.js
+-a----        07.02.2026     09:08          16635 map.js
+    Verzeichnis: C:\Users\drago\Documents\GitHub\Karma-Map\public\includes
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     19:39           5041 functions.php
+-a----        05.02.2026     19:39          13488 tile-generator.php
+    Verzeichnis: C:\Users\drago\Documents\GitHub\Karma-Map\uploads
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        05.02.2026     19:40                logo
+d-----        07.02.2026     17:06                map
+d-----        05.02.2026     19:40                marker
+d-----        07.02.2026     17:06                tiles
+-a----        05.02.2026     19:39             35 .gitkeep
+-a----        05.02.2026     19:42         114886 karma_bg_1770316934_Key_Art_V
+                                                  illage_Logo_8fb8d9dd4a.jpg
+-a----        05.02.2026     19:44         388400 karma_bg_1770317050_wp1503732
+                                                  3.webp
+-a----        05.02.2026     19:56         114886 karma_bg_1770317785_Key_Art_V
+                                                  illage_Logo_8fb8d9dd4a.jpg
+-a----        05.02.2026     20:08         114886 karma_bg_1770318501_Key_Art_V
+                                                  illage_Logo_8fb8d9dd4a.jpg
+-a----        05.02.2026     20:13         114886 karma_bg_1770318794_Key_Art_V
+                                                  illage_Logo_8fb8d9dd4a.jpg
+-a----        05.02.2026     20:15         388400 karma_bg_1770318926_wp1503732
+                                                  3.webp
+-a----        05.02.2026     19:42        1540350 karma_logo_1770316934_Logo_ka
+                                                  rma4.png
+-a----        05.02.2026     19:56        1540350 karma_logo_1770317785_Logo_ka
+                                                  rma4.png
+-a----        05.02.2026     20:08        1540350 karma_logo_1770318501_Logo_ka
+                                                  rma4.png
+-a----        05.02.2026     20:13        1540350 karma_logo_1770318794_Logo_ka
+                                                  rma4.png
+    Verzeichnis: C:\Users\drago\Documents\GitHub\Karma-Map\uploads\map
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     20:16        1064890 6984eca08f57d_1770319008.webp
+-a----        05.02.2026     20:19        3700588 6984ed581b614_1770319192.webp
+    Verzeichnis: C:\Users\drago\Documents\GitHub\Karma-Map\uploads\tiles
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----        05.02.2026     19:39            390 .htaccess

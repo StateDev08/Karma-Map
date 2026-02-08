@@ -1,6 +1,6 @@
 <?php
 $settings = [
-    'site_title' => getSetting('site_title', 'PAX Die Map - KARMA'),
+    'site_title' => getSetting('site_title', 'PAX DEI Map - KARMA'),
     'logo_type' => getSetting('logo_type', 'text'),
     'logo_text' => getSetting('logo_text', 'KARMA'),
     'logo_image' => getSetting('logo_image', ''),
@@ -26,7 +26,9 @@ $settings = [
     'map_double_click_zoom' => getSetting('map_double_click_zoom', '1'),
     'map_scroll_wheel_zoom' => getSetting('map_scroll_wheel_zoom', '1'),
     'map_marker_clustering' => getSetting('map_marker_clustering', '0'),
-    'map_auto_pan' => getSetting('map_auto_pan', '1')
+    'map_auto_pan' => getSetting('map_auto_pan', '1'),
+    'map_show_status' => getSetting('map_show_status', '1'),
+    'map_show_legend' => getSetting('map_show_legend', '1')
 ];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
@@ -60,6 +62,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             setSetting('map_scroll_wheel_zoom', isset($_POST['map_scroll_wheel_zoom']) ? '1' : '0');
             setSetting('map_marker_clustering', isset($_POST['map_marker_clustering']) ? '1' : '0');
             setSetting('map_auto_pan', isset($_POST['map_auto_pan']) ? '1' : '0');
+            setSetting('map_show_status', isset($_POST['map_show_status']) ? '1' : '0');
+            setSetting('map_show_legend', isset($_POST['map_show_legend']) ? '1' : '0');
             
             // Logo-Upload
             if (isset($_FILES['logo_upload']) && $_FILES['logo_upload']['error'] === UPLOAD_ERR_OK) {
@@ -285,6 +289,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 <input type="checkbox" name="map_scale_control" value="1" 
                        <?php echo $settings['map_scale_control'] === '1' ? 'checked' : ''; ?>>
                 <span><i class="fas fa-arrows-alt-h"></i> Maßstabsleiste</span>
+            </label>
+            
+            <label class="checkbox-label">
+                <input type="checkbox" name="map_show_status" value="1" 
+                       <?php echo $settings['map_show_status'] === '1' ? 'checked' : ''; ?>>
+                <span><i class="fas fa-info-circle"></i> Map-Status (Marker-Anzahl)</span>
+            </label>
+            
+            <label class="checkbox-label">
+                <input type="checkbox" name="map_show_legend" value="1" 
+                       <?php echo $settings['map_show_legend'] === '1' ? 'checked' : ''; ?>>
+                <span><i class="fas fa-list"></i> Map-Legende</span>
             </label>
         </div>
         
