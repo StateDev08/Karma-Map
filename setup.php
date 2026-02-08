@@ -99,6 +99,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 $sql = file_get_contents(SCHEMA_FILE);
                 
+                // BOM entfernen falls vorhanden
+                $sql = preg_replace('/^\xEF\xBB\xBF/', '', $sql);
+                
                 // Datenbank explizit verwenden
                 $pdo->exec("USE `{$setup['db_name']}`");
                 

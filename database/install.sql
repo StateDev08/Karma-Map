@@ -1,5 +1,5 @@
-ï»¿-- PAX DEI Map - Komplettes Datenbank Schema & Initialisierung
--- Erstellt: 08.02.2026 (ZusammengefÃ¼gt aus schema.sql, update_v2.2.0.sql und karma_update.sql)
+-- PAX DEI Map - Komplettes Datenbank Schema & Initialisierung
+-- Aktualisiert: 08.02.2026 (Zusammengefügt aus schema.sql, update_v2.2.0.sql und karma_update.sql)
 
 CREATE DATABASE IF NOT EXISTS pax_die_map CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE pax_die_map;
@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS settings (
     INDEX idx_key (setting_key)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Tabelle fÃ¼r Karma-Seiteninhalte
+-- Tabelle für Karma-Seiteninhalte
 CREATE TABLE IF NOT EXISTS karma_content (
     id INT AUTO_INCREMENT PRIMARY KEY,
     section VARCHAR(100) NOT NULL UNIQUE,
@@ -147,8 +147,8 @@ CREATE TABLE IF NOT EXISTS karma_content (
 
 INSERT INTO settings (setting_key, setting_value, description) VALUES
 ('site_title', 'PAX DEI Map - KARMA', 'Website-Titel'),
-('primary_color', '#FF0000', 'PrimÃ¤rfarbe (Rot)'),
-('secondary_color', '#000000', 'SekundÃ¤rfarbe (Schwarz)'),
+('primary_color', '#FF0000', 'Primärfarbe (Rot)'),
+('secondary_color', '#000000', 'Sekundärfarbe (Schwarz)'),
 ('accent_color', '#DC143C', 'Akzentfarbe'),
 ('logo_type', 'text', 'Logo-Typ: text, image oder custom'),
 ('logo_text', 'KARMA', 'Text-Logo'),
@@ -166,17 +166,17 @@ INSERT INTO settings (setting_key, setting_value, description) VALUES
 ('map_default_position_x', '0', 'Standard-Position X'),
 ('map_default_position_y', '0', 'Standard-Position Y'),
 ('map_grid_enabled', '0', 'Raster-Overlay aktiviert'),
-('map_grid_size', '100', 'Raster-GrÃ¶ÃŸe in Pixeln'),
+('map_grid_size', '100', 'Raster-Größe in Pixeln'),
 ('map_mouse_coordinates', '1', 'Maus-Koordinaten live anzeigen'),
-('map_scale_control', '1', 'MaÃŸstabsleiste anzeigen'),
+('map_scale_control', '1', 'Maßstabsleiste anzeigen'),
 ('map_zoom_animation', '1', 'Zoom-Animation aktiviert'),
 ('map_double_click_zoom', '1', 'Doppelklick-Zoom aktiviert'),
 ('map_scroll_wheel_zoom', '1', 'Mausrad-Zoom aktiviert'),
 ('map_marker_clustering', '0', 'Marker-Clustering aktiviert'),
 ('map_auto_pan', '1', 'Auto-Pan bei Marker-Klick'),
 ('karma_enabled', '1', 'Karma-Startseite aktiviert'),
-('karma_background_image', '', 'Hintergrundbild fÃ¼r Karma-Seite'),
-('karma_hero_logo', '', 'Hero-Logo fÃ¼r Karma-Seite'),
+('karma_background_image', '', 'Hintergrundbild für Karma-Seite'),
+('karma_hero_logo', '', 'Hero-Logo für Karma-Seite'),
 ('karma_show_map_link', '1', 'Map-Link in Navigation anzeigen'),
 ('karma_hero_overlay', '0.3', 'Hero-Sektion Overlay-Transparenz (0-1)'),
 ('karma_theme', 'dark', 'Theme der Karma-Seite (dark/light)'),
@@ -193,23 +193,23 @@ INSERT INTO permissions (name, description, category) VALUES
 ('users.view', 'Benutzer anzeigen', 'users'),
 ('users.create', 'Benutzer erstellen', 'users'),
 ('users.edit', 'Benutzer bearbeiten', 'users'),
-('users.delete', 'Benutzer lÃ¶schen', 'users'),
+('users.delete', 'Benutzer löschen', 'users'),
 ('users.manage_roles', 'Rollen verwalten', 'users'),
 -- Marker Management
 ('markers.view', 'Marker anzeigen', 'markers'),
 ('markers.create', 'Marker erstellen', 'markers'),
 ('markers.edit', 'Marker bearbeiten', 'markers'),
-('markers.delete', 'Marker lÃ¶schen', 'markers'),
+('markers.delete', 'Marker löschen', 'markers'),
 -- Guild Management
 ('guilds.view', 'Gilden anzeigen', 'guilds'),
 ('guilds.create', 'Gilden erstellen', 'guilds'),
 ('guilds.edit', 'Gilden bearbeiten', 'guilds'),
-('guilds.delete', 'Gilden lÃ¶schen', 'guilds'),
+('guilds.delete', 'Gilden löschen', 'guilds'),
 -- Marker Types
 ('marker_types.view', 'Marker-Typen anzeigen', 'marker_types'),
 ('marker_types.create', 'Marker-Typen erstellen', 'marker_types'),
 ('marker_types.edit', 'Marker-Typen bearbeiten', 'marker_types'),
-('marker_types.delete', 'Marker-Typen lÃ¶schen', 'marker_types'),
+('marker_types.delete', 'Marker-Typen löschen', 'marker_types'),
 -- Map Management
 ('map.upload', 'Map hochladen', 'map'),
 ('map.generate_tiles', 'Tiles generieren', 'map'),
@@ -262,7 +262,7 @@ INSERT INTO marker_types (name, icon, color, description, sort_order) VALUES
 ('Gildenterritorium', 'flag', '#FF0000', 'Territorium einer Gilde', 1),
 ('Ressourcen', 'tree', '#00FF00', 'Ressourcen-Punkte', 2),
 ('Dungeon', 'dungeon', '#800080', 'Dungeon-Eingang', 3),
-('Stadt', 'city', '#FFD700', 'StÃ¤dte und Siedlungen', 4),
+('Stadt', 'city', '#FFD700', 'Städte und Siedlungen', 4),
 ('PvP-Zone', 'crossed-swords', '#FF4500', 'PvP-Hotspots', 5),
 ('Boss', 'skull', '#8B0000', 'Boss-Spawns', 6),
 ('Handelsposten', 'store', '#1E90FF', 'Handelspunkte', 7),
@@ -270,12 +270,12 @@ INSERT INTO marker_types (name, icon, color, description, sort_order) VALUES
 
 -- KARMA Gilde als Standard
 INSERT INTO guilds (name, tag, description, color, leader_name, is_active) VALUES
-('KARMA', 'KARMA', 'Die mÃ¤chtigste Gilde von PAX DEI', '#DC143C', 'Guild Master', 1);
+('KARMA', 'KARMA', 'Die mächtigste Gilde von PAX DEI', '#DC143C', 'Guild Master', 1);
 
 -- Standard Karma-Sektionen
 INSERT INTO karma_content (section, title, content, is_visible, sort_order) VALUES
-('hero', 'Willkommen bei KARMA', '<h1>KARMA</h1><p>Die mÃ¤chtigste Gilde von PAX DEI</p>', 1, 1),
-('about', 'Ãœber Uns', '<h2>Ãœber KARMA</h2><p>KARMA ist die fÃ¼hrende Gilde in PAX DEI. Wir dominieren die Karte und verteidigen unser Territorium mit eiserner Faust.</p>', 1, 2),
-('features', 'Unsere StÃ¤rken', '<h2>Was uns auszeichnet</h2><ul><li>Erfahrene Leader</li><li>Aktive Community</li><li>Strategische Dominanz</li><li>Teamwork und Zusammenhalt</li></ul>', 1, 3),
-('join', 'Mitglied werden', '<h2>Werde Teil von KARMA</h2><p>Interessiert daran, der Elite beizutreten? Kontaktiere unsere Rekrutierungsoffiziere und beweise deine WÃ¼rdigkeit.</p>', 1, 4),
+('hero', 'Willkommen bei KARMA', '<h1>KARMA</h1><p>Die mächtigste Gilde von PAX DEI</p>', 1, 1),
+('about', 'Über Uns', '<h2>Über KARMA</h2><p>KARMA ist die führende Gilde in PAX DEI. Wir dominieren die Karte und verteidigen unser Territorium mit eiserner Faust.</p>', 1, 2),
+('features', 'Unsere Stärken', '<h2>Was uns auszeichnet</h2><ul><li>Erfahrene Leader</li><li>Aktive Community</li><li>Strategische Dominanz</li><li>Teamwork und Zusammenhalt</li></ul>', 1, 3),
+('join', 'Mitglied werden', '<h2>Werde Teil von KARMA</h2><p>Interessiert daran, der Elite beizutreten? Kontaktiere unsere Rekrutierungsoffiziere und beweise deine Würdigkeit.</p>', 1, 4),
 ('stats', 'Statistiken', '<h2>Unsere Erfolge</h2><p>Territorien: 15+<br>Aktive Mitglieder: 100+<br>Gewonnene Schlachten: 500+</p>', 1, 5);
