@@ -10,9 +10,9 @@ ini_set('display_errors', 1);
 
 // Datenbank-Konfiguration
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'karma');
-define('DB_USER', 'karma');
-define('DB_PASS', '$kvJs?p6ob5O0cSc');
+define('DB_NAME', 'pax_die_map');
+define('DB_USER', 'root');
+define('DB_PASS', '');
 define('DB_CHARSET', 'utf8mb4');
 
 // Pfade

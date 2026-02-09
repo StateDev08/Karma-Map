@@ -95,6 +95,14 @@ function initMap() {
     loadMarkers();
     setupFilters();
     setupMapControls();
+    window.mapInitialized = true;
+
+    // Erweiterte Features (Koordinaten, Suche, Messen, Zeichnen, Vollbild, Minimap usw.)
+    if (typeof initExtendedMapFeatures === 'function' && window.mapConfig) {
+        setTimeout(function() {
+            initExtendedMapFeatures(map, window.mapConfig);
+        }, 150);
+    }
 }
 
 function maybeFitMarkersAfterLoad() {
@@ -123,7 +131,9 @@ function setupMapControls() {
 // Marker vom Server laden
 async function loadMarkers() {
     try {
-        const response = await fetch('api/markers.php');
+        const base = (typeof window.BASE_PATH !== 'undefined' && window.BASE_PATH) ? window.BASE_PATH : '';
+        const apiUrl = (base ? base + '/' : '') + 'api/markers.php';
+        const response = await fetch(apiUrl);
         const data = await response.json();
         
         if (data.success && data.markers) {
@@ -213,9 +223,13 @@ function displayMarkers(markerData) {
         newMarkers.push(marker);
     });
     
-    // Batch-Hinzufügen für bessere Performance
+    // Hinzufügen (LayerGroup hat nur addLayer, MarkerClusterGroup hat addLayers)
     if (newMarkers.length > 0) {
-        markerLayer.addLayers(newMarkers);
+        if (typeof markerLayer.addLayers === 'function') {
+            markerLayer.addLayers(newMarkers);
+        } else {
+            newMarkers.forEach(function(m) { markerLayer.addLayer(m); });
+        }
         markers = newMarkers;
     }
     
@@ -277,21 +291,23 @@ function shouldShowMarker(data) {
     if (currentFilters.types.size === 0 && currentFilters.guilds.size === 0) {
         return true;
     }
-    
-    // Typ-Filter
+    var typeId = data.marker_type_id != null ? Number(data.marker_type_id) : null;
+    var guildId = data.guild_id != null ? Number(data.guild_id) : null;
+
+    // Typ-Filter (API liefert evtl. String, Filter-Set hat Integers)
     if (currentFilters.types.size > 0) {
-        if (!data.marker_type_id || !currentFilters.types.has(data.marker_type_id)) {
+        if (typeId == null || !currentFilters.types.has(typeId)) {
             return false;
         }
     }
-    
+
     // Gilden-Filter
     if (currentFilters.guilds.size > 0) {
-        if (!data.guild_id || !currentFilters.guilds.has(data.guild_id)) {
+        if (guildId == null || !currentFilters.guilds.has(guildId)) {
             return false;
         }
     }
-    
+
     return true;
 }
 
@@ -539,6 +555,8 @@ function updateLoadingIndicator(loading) {
 }
 
 // Map initialisieren wenn Seite geladen
+// Automatische Initialisierung deaktiviert (wird manuell in index.php aufgerufen)
+/*
 document.addEventListener('DOMContentLoaded', function() {
     initMap();
     
@@ -567,3 +585,4 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 500);
     }
 });
+*/

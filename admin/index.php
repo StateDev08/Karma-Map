@@ -62,7 +62,7 @@
                 <a href="../index.php" class="nav-item" target="_blank">
                     <i class="fas fa-home"></i> Zur Startseite
                 </a>
-                <a href="../map.php" class="nav-item" target="_blank">
+                <a href="../index.php#map-section" class="nav-item" target="_blank">
                     <i class="fas fa-map"></i> Zur Map
                 </a>
                 <a href="logout.php" class="nav-item">

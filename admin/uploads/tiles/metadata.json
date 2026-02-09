@@ -1,0 +1,22 @@
+{
+    "version": "2.2",
+    "tileSize": 512,
+    "maxZoom": 10,
+    "minZoom": 0,
+    "sourceWidth": 3840,
+    "sourceHeight": 2160,
+    "tilesGenerated": 64,
+    "generatedAt": "2026-02-09 03:25:28",
+    "executionTime": 10.83,
+    "formats": [
+        "png",
+        "webp",
+        "jpeg"
+    ],
+    "quality": {
+        "jpeg": 85,
+        "webp": 92,
+        "png": 6
+    },
+    "estimatedSize": "15.74 MB"
+}
